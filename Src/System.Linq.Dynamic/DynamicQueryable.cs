@@ -1,10 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Threading;
 using FluentValidationNA;
 
 namespace System.Linq.Dynamic
@@ -97,6 +93,61 @@ namespace System.Linq.Dynamic
         }
 
         /// <summary>
+        /// Projects each element of a sequence into a new class of type TResult.
+        /// Details see http://solutionizing.net/category/linq/ 
+        /// </summary>
+        /// <typeparam name="TResult">The type of the result.</typeparam>
+        /// <param name="source">A sequence of values to project.</param>
+        /// <param name="selector">A projection string expression to apply to each element.</param>
+        /// <param name="args">An object array that contains zero or more objects to insert into the predicate as parameters.</param>
+        /// <returns>An <see cref="IQueryable{TResult}"/> whose elements are the result of invoking a projection string on each element of source.</returns>
+        /// <example>
+        /// <code>
+        /// var users = qry.Select&lt;User&gt;("new (StringProperty1, StringProperty2 as OtherStringPropertyName)");
+        /// </code>
+        /// </example>
+        public static IQueryable<TResult> Select<TResult>(this IQueryable source, string selector, params object[] args)
+        {
+            Validate.Argument(source, "source").IsNotNull().Check()
+                    .Argument(selector, "selector").IsNotNull().IsNotEmpty().IsNotWhiteSpace().Check();
+
+            LambdaExpression lambda = DynamicExpression.ParseLambda(source.ElementType, typeof(TResult), selector, args);
+            return source.Provider.CreateQuery<TResult>(
+                Expression.Call(
+                    typeof(Queryable), "Select",
+                    new Type[] { source.ElementType, typeof(TResult) },
+                    source.Expression, Expression.Quote(lambda)));
+        }
+
+        /// <summary>
+        /// Projects each element of a sequence into a new class of type TResult.
+        /// Details see http://solutionizing.net/category/linq/ 
+        /// </summary>
+        /// <param name="source">A sequence of values to project.</param>
+        /// <param name="type">The result type</param>
+        /// <param name="selector">A projection string expression to apply to each element.</param>
+        /// <param name="args">An object array that contains zero or more objects to insert into the predicate as parameters.</param>
+        /// <returns>An <see cref="IQueryable{TResult}"/> whose elements are the result of invoking a projection string on each element of source.</returns>
+        /// <example>
+        /// <code>
+        /// var users = qry.Select(typeof(User), "new (StringProperty1, StringProperty2 as OtherStringPropertyName)");
+        /// </code>
+        /// </example>
+        public static IQueryable Select(this IQueryable source, Type type, string selector, params object[] args)
+        {
+            Validate.Argument(source, "source").IsNotNull().Check()
+                    .Argument(selector, "type").IsNotNull().Check()
+                    .Argument(selector, "selector").IsNotNull().IsNotEmpty().IsNotWhiteSpace().Check();
+
+            LambdaExpression lambda = DynamicExpression.ParseLambda(source.ElementType, type, selector, args);
+            return source.Provider.CreateQuery(
+                Expression.Call(
+                    typeof(Queryable), "Select",
+                    new Type[] { source.ElementType, type },
+                    source.Expression, Expression.Quote(lambda)));
+        }
+
+        /// <summary>
         /// Projects each element of a sequence to an <see cref="IQueryable"/> and combines the 
         /// resulting sequences into one sequence.
         /// </summary>
@@ -129,7 +180,7 @@ namespace System.Linq.Dynamic
         }
 
         #endregion
-        
+
         #region OrderBy
 
         /// <summary>
@@ -412,4 +463,3 @@ namespace System.Linq.Dynamic
         #endregion
     }
 }
-

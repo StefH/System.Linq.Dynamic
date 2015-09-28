@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
-using System.Linq.Dynamic;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq.Dynamic.Tests.Helpers;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,8 +46,8 @@ namespace System.Linq.Dynamic.Tests
             Helper.ExpectException<ArgumentNullException>(() => qry.Where(null));
             Helper.ExpectException<ArgumentException>(() => qry.Where(""));
             Helper.ExpectException<ArgumentException>(() => qry.Where(" "));
-        }    
-        
+        }
+
         [TestMethod]
         public void OrderBy()
         {
@@ -66,7 +63,7 @@ namespace System.Linq.Dynamic.Tests
             var orderByAgeDesc = qry.OrderBy("Profile.Age DESC");
             var orderByComplex = qry.OrderBy("Profile.Age, Id");
             var orderByComplex2 = qry.OrderBy("Profile.Age DESC, Id");
-            
+
 
             //Assert
             CollectionAssert.AreEqual(testList.OrderBy(x => x.Id).ToArray(), orderById.ToArray());
@@ -88,7 +85,7 @@ namespace System.Linq.Dynamic.Tests
 
             //Act
             var orderById = qry.SelectMany("Roles.OrderBy(Name)").Select("Name");
-            var expected = qry.SelectMany(x => x.Roles.OrderBy(y => y.Name)).Select( x => x.Name);
+            var expected = qry.SelectMany(x => x.Roles.OrderBy(y => y.Name)).Select(x => x.Name);
 
             var orderByIdDesc = qry.SelectMany("Roles.OrderByDescending(Name)").Select("Name");
             var expectedDesc = qry.SelectMany(x => x.Roles.OrderByDescending(y => y.Name)).Select(x => x.Name);
@@ -114,7 +111,7 @@ namespace System.Linq.Dynamic.Tests
             Helper.ExpectException<ArgumentNullException>(() => qry.OrderBy(null));
             Helper.ExpectException<ArgumentException>(() => qry.OrderBy(""));
             Helper.ExpectException<ArgumentException>(() => qry.OrderBy(" "));
-        }    
+        }
 
         [TestMethod]
         public void Select()
@@ -147,6 +144,21 @@ namespace System.Linq.Dynamic.Tests
                 userFirstName.AsEnumerable().Select(x => x.ToString()).ToArray());
             CollectionAssert.AreEqual(testList[0].Roles.Select(x => x.Id).ToArray(), Enumerable.ToArray(userRoles.First().RoleIds));
 #endif
+        }
+
+        [TestMethod]
+        public void SelectTResult()
+        {
+            //Arrange
+            var testList = User.GenerateSampleModels(100);
+            var qry = testList.AsQueryable();
+
+            //Act
+            var users = qry.Select<User>("new (it.UserName as UserName, 5 as Income)").ToList();
+
+            //Assert
+            Assert.AreEqual(testList[0].UserName, users[0].UserName);
+            Assert.AreEqual(5, users[0].Income);
         }
 
         [TestMethod]
@@ -309,7 +321,7 @@ namespace System.Linq.Dynamic.Tests
             var dynamicResult = dynamicQuery.ToDynamicArray();
 
             Assert.AreEqual(realResult.Length, dynamicResult.Length);
-            for( int i = 0; i < realResult.Length; i++)
+            for (int i = 0; i < realResult.Length; i++)
             {
                 Assert.AreEqual(realResult[i].OwnerName, dynamicResult[i].OwnerName);
                 Assert.AreEqual(realResult[i].Pet, dynamicResult[i].Pet);

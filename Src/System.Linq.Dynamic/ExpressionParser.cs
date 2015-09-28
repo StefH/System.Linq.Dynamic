@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 using System.Collections;
 using System.Globalization;
 
@@ -333,8 +330,10 @@ namespace System.Linq.Dynamic
             _symbols.Add(name, value);
         }
 
+        private Type _resultType;
         public Expression Parse(Type resultType)
         {
+            _resultType = resultType;
             int exprPos = _token.pos;
             Expression expr = ParseExpression();
             if (resultType != null)
@@ -439,7 +438,7 @@ namespace System.Linq.Dynamic
                         Expression right = ParsePrimary();
 
                         //check for direct type match
-                        if (identifier.Type != right.Type) 
+                        if (identifier.Type != right.Type)
                         {
                             //check for nullable type match
                             if (!identifier.Type.IsGenericType || identifier.Type.GetGenericTypeDefinition() != typeof(Nullable<>) || identifier.Type.GetGenericArguments()[0] != right.Type)
@@ -654,13 +653,13 @@ namespace System.Linq.Dynamic
                 switch (op.id)
                 {
                     case TokenId.Plus:
-                        if (left.Type == typeof (string) || right.Type == typeof (string))
+                        if (left.Type == typeof(string) || right.Type == typeof(string))
                         {
                             left = GenerateStringConcat(left, right);
                         }
                         else
                         {
-                            CheckAndPromoteOperands(typeof (IAddSignatures), op.text, ref left, ref right, op.pos);
+                            CheckAndPromoteOperands(typeof(IAddSignatures), op.text, ref left, ref right, op.pos);
                             left = GenerateAdd(left, right);
                         }
                         break;
@@ -860,7 +859,7 @@ namespace System.Linq.Dynamic
             return e;
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification="This is not true in this case.")]
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "This is not true in this case.")]
         Expression ParseIdentifier()
         {
             ValidateToken(TokenId.Identifier);
@@ -983,7 +982,7 @@ namespace System.Linq.Dynamic
                 }
                 else
                 {
-                    if (!TryGetMemberName(expr, out propName)) 
+                    if (!TryGetMemberName(expr, out propName))
                         throw ParseError(exprPos, Res.MissingAsClause);
                 }
 
@@ -994,7 +993,15 @@ namespace System.Linq.Dynamic
             }
             ValidateToken(TokenId.CloseParen, Res.CloseParenOrCommaExpected);
             NextToken();
-            Type type = DynamicExpression.CreateClass(properties);
+
+            // http://solutionizing.net/category/linq/ 
+            Type type = _resultType ?? DynamicExpression.CreateClass(properties);
+
+            var propertyTypes = type.GetProperties().Select(p => p.PropertyType).ToArray();
+            var ctor = type.GetConstructor(propertyTypes);
+            if (ctor != null)
+                return Expression.New(ctor, expressions);
+
             MemberBinding[] bindings = new MemberBinding[properties.Count];
             for (int i = 0; i < bindings.Length; i++)
                 bindings[i] = Expression.Bind(type.GetProperty(properties[i].Name), expressions[i]);
@@ -1029,7 +1036,7 @@ namespace System.Linq.Dynamic
             bool shorthand = _token.id == TokenId.StringLiteral;
             if (_token.id == TokenId.OpenParen || shorthand)
             {
-                Expression[] args = shorthand 
+                Expression[] args = shorthand
                     ? new Expression[] { ParseStringLiteral() }
                     : ParseArgumentList();
 
@@ -1085,7 +1092,7 @@ namespace System.Linq.Dynamic
                 if (method != null && (bool)method.Invoke(null, arguments))
                     return Expression.Constant(arguments[1], type);
             }
-            
+
             throw ParseError(errorPos, Res.CannotConvertValue, GetTypeName(exprType), GetTypeName(type));
         }
 
@@ -1198,11 +1205,11 @@ namespace System.Linq.Dynamic
                 throw ParseError(errorPos, Res.NoApplicableAggregate, methodName);
             Type[] typeArgs;
             if (
-                signature.Name == "Min" || 
-                signature.Name == "Max" || 
+                signature.Name == "Min" ||
+                signature.Name == "Max" ||
                 signature.Name == "Select" ||
                 signature.Name == "OrderBy" ||
-                signature.Name == "OrderByDescending" 
+                signature.Name == "OrderByDescending"
                 )
             {
                 typeArgs = new Type[] { elementType, args[0].Type };
@@ -1212,7 +1219,7 @@ namespace System.Linq.Dynamic
                 typeArgs = new Type[] { elementType };
             }
 
-            if( signature.Name == "Contains")
+            if (signature.Name == "Contains")
             {
                 args = new Expression[] { instance, args[0] };
             }
@@ -1313,19 +1320,19 @@ namespace System.Linq.Dynamic
         static bool TryGetMemberName(Expression expression, out string memberName)
         {
             var memberExpression = expression as MemberExpression;
-            if( memberExpression != null )
+            if (memberExpression != null)
             {
                 memberName = memberExpression.Member.Name;
                 return true;
             }
-//#if !NET35
-//            var dynamicExpression = expression as Expressions.DynamicExpression;
-//            if (dynamicExpression != null)
-//            {
-//                memberName = ((GetMemberBinder)dynamicExpression.Binder).Name;
-//                return true;
-//            }
-//#endif
+            //#if !NET35
+            //            var dynamicExpression = expression as Expressions.DynamicExpression;
+            //            if (dynamicExpression != null)
+            //            {
+            //                memberName = ((GetMemberBinder)dynamicExpression.Binder).Name;
+            //                return true;
+            //            }
+            //#endif
 
             memberName = null;
             return false;
@@ -1415,7 +1422,7 @@ namespace System.Linq.Dynamic
             }
             return null;
         }
-        
+
         int FindMethod(Type type, string methodName, bool staticAccess, Expression[] args, out MethodBase method)
         {
             BindingFlags flags = BindingFlags.Public | BindingFlags.DeclaredOnly |
@@ -1907,7 +1914,7 @@ namespace System.Linq.Dynamic
             return Expression.Call(null, GetStaticMethod(methodName, left, right), new[] { left, right });
         }
 
-        
+
         static void OptimizeForEqualityIfPossible(ref Expression left, ref Expression right)
         {
             // The goal here is to provide the way to convert some types from the string form in a way that is compatible with Linq-to-Entities.
