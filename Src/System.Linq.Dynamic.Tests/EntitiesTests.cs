@@ -1,9 +1,9 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq.Dynamic.Tests.Helpers.Entities;
+#if DNXCORE50 || DNX451 || DNX452
+using TestToolsToXunitProxy;
+#else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq.Dynamic.Tests.Helpers.Entities;
+#endif
 
 namespace System.Linq.Dynamic.Tests
 {
@@ -14,8 +14,6 @@ namespace System.Linq.Dynamic.Tests
     public class EntitiesTests
     {
         BlogContext _context;
-
-
         public TestContext TestContext { get; set; }
 
         #region Entities Test Support
@@ -34,17 +32,17 @@ namespace System.Linq.Dynamic.Tests
         static readonly Random Rnd = new Random(1);
 
         // Use TestInitialize to run code before running each test 
-        [TestInitialize()]
+        [TestInitialize]
         public void MyTestInitialize()
         {
-            var connectionString = String.Format(@"Data Source=(localdb)\v11.0;Initial Catalog=DynamicLinqTestDb_{0};Integrated Security=True", TestContext.TestName);
+            var connectionString = string.Format(@"Data Source=(localdb)\v11.0;Initial Catalog=DynamicLinqTestDb_{0};Integrated Security=True", TestContext.TestName);
 
             _context = new BlogContext(connectionString);
             _context.Database.Delete();
         }
 
         // Use TestCleanup to run code after each test has run
-        [TestCleanup()]
+        [TestCleanup]
         public void MyTestCleanup()
         {
             _context.Database.Delete();

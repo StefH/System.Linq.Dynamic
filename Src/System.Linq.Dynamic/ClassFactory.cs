@@ -1,27 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Text;
 using System.Threading;
 
 namespace System.Linq.Dynamic
 {
-
-    [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification="There is only ever one instance of this class, and it should never be destroyed except on AppDomain termination.")]
+    [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable",
+        Justification =
+            "There is only ever one instance of this class, and it should never be destroyed except on AppDomain termination."
+        )]
     internal class ClassFactory
     {
         public static readonly ClassFactory Instance = new ClassFactory();
 
-        ModuleBuilder _module;
-        Dictionary<Signature, Type> _classes;
-        int _classCount;
+        private ModuleBuilder _module;
+        private Dictionary<Signature, Type> _classes;
+        private int _classCount;
 #if SILVERLIGHT
         ReaderWriterLock _rwLock;
 #else
-        ReaderWriterLockSlim _rwLock;
+        private ReaderWriterLockSlim _rwLock;
 #endif
 
         private ClassFactory()
@@ -53,12 +52,12 @@ namespace System.Linq.Dynamic
         {
             Signature signature = new Signature(properties);
 
-#if SILVERLIGHT
+#if SILVERLIGHT || NET20
             _rwLock.AcquireReaderLock(Timeout.Infinite);
 #else
             _rwLock.EnterReadLock();
 #endif
-       
+
             try
             {
                 Type type;
@@ -70,16 +69,16 @@ namespace System.Linq.Dynamic
 #if SILVERLIGHT
                  _rwLock.ReleaseReaderLock();
 #else
-                 _rwLock.ExitReadLock();
+                _rwLock.ExitReadLock();
 #endif
             }
 
             return CreateDynamicClass(signature);
         }
 
-        Type CreateDynamicClass(Signature signature)
+        private Type CreateDynamicClass(Signature signature)
         {
-#if SILVERLIGHT
+#if SILVERLIGHT || NET20
             _rwLock.UpgradeToWriterLock(Timeout.Infinite);
 #else
             _rwLock.EnterWriteLock();
@@ -91,7 +90,7 @@ namespace System.Linq.Dynamic
 
                 //do a final check to make sure the type hasn't been generated.
                 if (_classes.TryGetValue(signature, out type)) return type;
-            
+
 
                 string typeName = "DynamicClass" + (_classCount + 1);
 #if ENABLE_LINQ_PARTIAL_TRUST
@@ -100,11 +99,11 @@ namespace System.Linq.Dynamic
                 try
                 {
                     TypeBuilder tb = this._module.DefineType(typeName, TypeAttributes.Class |
-                        TypeAttributes.Public, typeof(DynamicClass));
+                                                                       TypeAttributes.Public, typeof (DynamicClass));
                     FieldInfo[] fields = GenerateProperties(tb, signature.properties);
                     GenerateEquals(tb, fields);
                     GenerateGetHashCode(tb, fields);
-                    
+
                     Type result = tb.CreateType();
                     _classCount++;
 
@@ -129,7 +128,7 @@ namespace System.Linq.Dynamic
             }
         }
 
-        static FieldInfo[] GenerateProperties(TypeBuilder tb, DynamicProperty[] properties)
+        private static FieldInfo[] GenerateProperties(TypeBuilder tb, DynamicProperty[] properties)
         {
             FieldInfo[] fields = new FieldBuilder[properties.Length];
             for (int i = 0; i < properties.Length; i++)
@@ -146,7 +145,7 @@ namespace System.Linq.Dynamic
                 genGet.Emit(OpCodes.Ret);
                 MethodBuilder mbSet = tb.DefineMethod("set_" + dp.Name,
                     MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig,
-                    null, new Type[] { dp.Type });
+                    null, new Type[] {dp.Type});
                 ILGenerator genSet = mbSet.GetILGenerator();
                 genSet.Emit(OpCodes.Ldarg_0);
                 genSet.Emit(OpCodes.Ldarg_1);
@@ -159,12 +158,12 @@ namespace System.Linq.Dynamic
             return fields;
         }
 
-        static void GenerateEquals(TypeBuilder tb, FieldInfo[] fields)
+        private static void GenerateEquals(TypeBuilder tb, FieldInfo[] fields)
         {
             MethodBuilder mb = tb.DefineMethod("Equals",
                 MethodAttributes.Public | MethodAttributes.ReuseSlot |
                 MethodAttributes.Virtual | MethodAttributes.HideBySig,
-                typeof(bool), new Type[] { typeof(object) });
+                typeof (bool), new Type[] {typeof (object)});
             ILGenerator gen = mb.GetILGenerator();
             LocalBuilder other = gen.DeclareLocal(tb);
             Label next = gen.DefineLabel();
@@ -179,14 +178,14 @@ namespace System.Linq.Dynamic
             foreach (FieldInfo field in fields)
             {
                 Type ft = field.FieldType;
-                Type ct = typeof(EqualityComparer<>).MakeGenericType(ft);
+                Type ct = typeof (EqualityComparer<>).MakeGenericType(ft);
                 next = gen.DefineLabel();
                 gen.EmitCall(OpCodes.Call, ct.GetMethod("get_Default"), null);
                 gen.Emit(OpCodes.Ldarg_0);
                 gen.Emit(OpCodes.Ldfld, field);
                 gen.Emit(OpCodes.Ldloc, other);
                 gen.Emit(OpCodes.Ldfld, field);
-                gen.EmitCall(OpCodes.Callvirt, ct.GetMethod("Equals", new Type[] { ft, ft }), null);
+                gen.EmitCall(OpCodes.Callvirt, ct.GetMethod("Equals", new Type[] {ft, ft}), null);
                 gen.Emit(OpCodes.Brtrue_S, next);
                 gen.Emit(OpCodes.Ldc_I4_0);
                 gen.Emit(OpCodes.Ret);
@@ -196,29 +195,29 @@ namespace System.Linq.Dynamic
             gen.Emit(OpCodes.Ret);
         }
 
-        static void GenerateGetHashCode(TypeBuilder tb, FieldInfo[] fields)
+        private static void GenerateGetHashCode(TypeBuilder tb, FieldInfo[] fields)
         {
             MethodBuilder mb = tb.DefineMethod("GetHashCode",
                 MethodAttributes.Public | MethodAttributes.ReuseSlot |
                 MethodAttributes.Virtual | MethodAttributes.HideBySig,
-                typeof(int), Type.EmptyTypes);
+                typeof (int), Type.EmptyTypes);
             ILGenerator gen = mb.GetILGenerator();
             gen.Emit(OpCodes.Ldc_I4_0);
             foreach (FieldInfo field in fields)
             {
                 Type ft = field.FieldType;
-                Type ct = typeof(EqualityComparer<>).MakeGenericType(ft);
+                Type ct = typeof (EqualityComparer<>).MakeGenericType(ft);
                 gen.EmitCall(OpCodes.Call, ct.GetMethod("get_Default"), null);
                 gen.Emit(OpCodes.Ldarg_0);
                 gen.Emit(OpCodes.Ldfld, field);
-                gen.EmitCall(OpCodes.Callvirt, ct.GetMethod("GetHashCode", new Type[] { ft }), null);
+                gen.EmitCall(OpCodes.Callvirt, ct.GetMethod("GetHashCode", new Type[] {ft}), null);
                 gen.Emit(OpCodes.Xor);
             }
             gen.Emit(OpCodes.Ret);
         }
 
 
-        class Signature : IEquatable<Signature>
+        private class Signature : IEquatable<Signature>
         {
             public DynamicProperty[] properties;
             public int hashCode;
@@ -261,5 +260,4 @@ namespace System.Linq.Dynamic
             }
         }
     }
-
 }

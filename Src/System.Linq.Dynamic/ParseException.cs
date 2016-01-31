@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace System.Linq.Dynamic
 {
-
     /// <summary>
     /// Represents errors that occur while parsing dynamic linq string expressions.
     /// </summary>
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors")]
-#if !SILVERLIGHT
+#if !(SILVERLIGHT || DNXCORE50)
     [Serializable]
 #endif
     public sealed class ParseException : Exception
@@ -48,7 +43,7 @@ namespace System.Linq.Dynamic
             return string.Format(CultureInfo.CurrentCulture, Res.ParseExceptionFormat, Message, _position);
         }
 
-#if !SILVERLIGHT
+#if !(SILVERLIGHT || DNXCORE50)
         ParseException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

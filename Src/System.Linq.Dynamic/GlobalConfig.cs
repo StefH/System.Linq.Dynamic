@@ -45,7 +45,7 @@ namespace System.Linq.Dynamic
             get { return _contextKeywordsEnabled; }
             set
             {
-                if( value != _contextKeywordsEnabled )
+                if (value != _contextKeywordsEnabled)
                 {
                     _contextKeywordsEnabled = value;
 
@@ -53,5 +53,10 @@ namespace System.Linq.Dynamic
                 }
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static bool UseDynamicObjectClassForAnonymousTypes { get; set; }
     }
 }

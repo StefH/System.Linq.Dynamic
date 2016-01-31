@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 
 namespace System.Linq.Dynamic
 {
-
     /// <summary>
     /// The result of a call to a <see cref="DynamicQueryable"/>.GroupByMany() overload.
     /// </summary>
     public class GroupResult
     {
-
         /// <summary>
-        /// The key value of the group.
+        /// The key value of the group. (TODO : check for DNXCORE50)
         /// </summary>
 #if NET35
         public object Key { get; internal set; }

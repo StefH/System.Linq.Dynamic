@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace System.Linq.Dynamic
 {
@@ -23,7 +20,7 @@ namespace System.Linq.Dynamic
         /// <summary>
         /// Returns a list of custom types that Dynamic Linq will understand.
         /// </summary>
-        public HashSet<Type> GetCustomTypes()
+        public virtual HashSet<Type> GetCustomTypes()
         {
             if (_customTypes == null) _customTypes = new HashSet<Type>(FindTypesMarkedWithAttribute());
 
@@ -32,9 +29,18 @@ namespace System.Linq.Dynamic
 
         static IEnumerable<Type> FindTypesMarkedWithAttribute()
         {
+#if !(NETFX_CORE || DNXCORE50)
             return AppDomain.CurrentDomain.GetAssemblies()
+#if !(NET35)
+                .Where(x => !x.IsDynamic)
+#endif
                 .SelectMany(x => x.GetTypes())
                 .Where(x => x.GetCustomAttributes(typeof(DynamicLinqTypeAttribute), false).Any());
+#else
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(x => x.DefinedTypes)
+                .Where(x => x.CustomAttributes.Any(y => y.AttributeType == typeof(DynamicLinqTypeAttribute))).Select(x => x.AsType());
+#endif
         }
     }
 }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace System.Linq.Dynamic
 {
-
     internal static class DynamicExpression
     {
         //Commented Out as It's never used.
@@ -39,10 +35,12 @@ namespace System.Linq.Dynamic
         //    return ClassFactory.Instance.GetDynamicClass(properties);
         //}
 
+#if !NETFX_CORE
         public static Type CreateClass(IEnumerable<DynamicProperty> properties)
         {
             return ClassFactory.Instance.GetDynamicClass(properties);
         }
+#endif
     }
 
 }

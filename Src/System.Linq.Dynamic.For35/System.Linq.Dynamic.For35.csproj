@@ -32,7 +32,7 @@
     <DocumentationFile>bin\Release\System.Linq.Dynamic.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\System.Linq.Dynamic\Properties\key.snk</AssemblyOriginatorKeyFile>
@@ -40,6 +40,10 @@
   <ItemGroup>
     <Reference Include="FluentValidationNA">
       <HintPath>..\packages\FluentValidationNA.1.2.16\lib\net35\FluentValidationNA.dll</HintPath>
+    </Reference>
+    <Reference Include="ReflectionBridge, Version=0.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ReflectionBridge.0.0.6\lib\net35\ReflectionBridge.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -37,14 +37,19 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>Properties\key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentValidationNA">
-      <HintPath>..\packages\FluentValidationNA.1.2.16\lib\net40\FluentValidationNA.dll</HintPath>
+    <Reference Include="FluentValidation.dnx, Version=2.0.0.43011, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.dnx.2.0.0-beta002\lib\net40\FluentValidation.dnx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ReflectionBridge, Version=0.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ReflectionBridge.0.0.6\lib\net40\ReflectionBridge.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -60,9 +65,12 @@
     <Compile Include="DynamicClass.cs" />
     <Compile Include="DynamicExpression.cs" />
     <Compile Include="DynamicLinqTypeProvider.cs" />
+    <Compile Include="DynamicObjectClass.cs" />
     <Compile Include="DynamicQueryable.cs" />
     <Compile Include="DynamicOrdering.cs" />
     <Compile Include="DynamicProperty.cs" />
+    <Compile Include="ExpressionConverter.cs" />
+    <Compile Include="ExpressionParser.NetFX_backup.cs" />
     <Compile Include="ExpressionParser.cs" />
     <Compile Include="GlobalConfig.cs" />
     <Compile Include="GlobalSuppressions.cs" />

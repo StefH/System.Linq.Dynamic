@@ -1,9 +1,10 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq.Dynamic;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq.Dynamic.Tests.Helpers;
-using System.Linq;
+#if DNXCORE50 || DNX451 || DNX452
+using TestToolsToXunitProxy;
+#else
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 
 namespace System.Linq.Dynamic.Tests
 {

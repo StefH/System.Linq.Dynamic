@@ -1,10 +1,11 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
-using System.Linq.Dynamic;
-using System.Linq.Dynamic.Tests.Helpers;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Dynamic.Tests.Helpers;
+#if DNXCORE50 || DNX451 || DNX452
+using TestToolsToXunitProxy;
+#else
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 
 namespace System.Linq.Dynamic.Tests
 {
@@ -135,18 +136,33 @@ namespace System.Linq.Dynamic.Tests
             CollectionAssert.AreEqual(range.Select(x => x * x).ToArray(), rangeResult.Cast<int>().ToArray());
 
 #if NET35
-            CollectionAssert.AreEqual(testList.Select(x => x.UserName).ToArray(), userNames.AsEnumerable().ToArray());
+            CollectionAssert.AreEqual(testList.Select(x => x.UserName).ToArray(), userNames.AsEnumerable().Cast<string>().ToArray());
             CollectionAssert.AreEqual(
                 testList.Select(x => "{UserName=" + x.UserName + ", MyFirstName=" + x.Profile.FirstName + "}").ToArray(),
                 userFirstName.Cast<object>().Select(x => x.ToString()).ToArray());
             CollectionAssert.AreEqual(testList[0].Roles.Select(x => x.Id).ToArray(), Enumerable.ToArray(userRoles.First().GetDynamicProperty<IEnumerable<Guid>>("RoleIds")));
 #else
-            CollectionAssert.AreEqual(testList.Select(x => x.UserName).ToArray(), userNames.ToDynamicArray());
+            CollectionAssert.AreEqual(testList.Select(x => x.UserName).ToArray(), userNames.Cast<string>().ToArray());
             CollectionAssert.AreEqual(
                 testList.Select(x => "{UserName=" + x.UserName + ", MyFirstName=" + x.Profile.FirstName + "}").ToArray(),
-                userFirstName.AsEnumerable().Select(x => x.ToString()).ToArray());
+                userFirstName.AsEnumerable().Select(x => x.ToString()).Cast<string>().ToArray());
             CollectionAssert.AreEqual(testList[0].Roles.Select(x => x.Id).ToArray(), Enumerable.ToArray(userRoles.First().RoleIds));
 #endif
+        }
+
+        [TestMethod]
+        public void SelectTResult()
+        {
+            //Arrange
+            var testList = User.GenerateSampleModels(100);
+            var qry = testList.AsQueryable();
+
+            //Act
+            var users = qry.Select<User>("new (it.UserName as UserName, 5 as Income)").ToList();
+
+            //Assert
+            Assert.AreEqual(testList[0].UserName, users[0].UserName);
+            Assert.AreEqual(5, users[0].Income);
         }
 
         [TestMethod]

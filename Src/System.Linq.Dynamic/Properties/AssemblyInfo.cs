@@ -3,12 +3,6 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-#if DEBUG
-[assembly: InternalsVisibleTo("System.Linq.Dynamic.Tests, PublicKey=002400000480000094000000060200000024000052534131000400000100010037361a01268ef18864bd28306b22d50e84438d363923e1a6414759238d004114acc53c4e69886d948dd5125963b10a45a6834c4dc6baeb1534a69a7582531816535aa43824ea095ac80a687fe27c0c49dd72e4b5bec580fa0e12aa35df208fb8dc4a4cdfb8c8f1598ed26cf38bfb5ae8eea5ed79955470c792c7a40250772b9b")]
-[assembly: InternalsVisibleTo("System.Linq.Dynamic.For35.Tests, PublicKey=002400000480000094000000060200000024000052534131000400000100010037361a01268ef18864bd28306b22d50e84438d363923e1a6414759238d004114acc53c4e69886d948dd5125963b10a45a6834c4dc6baeb1534a69a7582531816535aa43824ea095ac80a687fe27c0c49dd72e4b5bec580fa0e12aa35df208fb8dc4a4cdfb8c8f1598ed26cf38bfb5ae8eea5ed79955470c792c7a40250772b9b")]
-#endif
-
-
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
@@ -45,4 +39,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.14.*")]
+[assembly: AssemblyVersion("2.0.0.*")]
+
+[assembly: InternalsVisibleTo("System.Linq.Dynamic.Tests")]
+[assembly: InternalsVisibleTo("System.Linq.Dynamic.dnx.Tests")]
