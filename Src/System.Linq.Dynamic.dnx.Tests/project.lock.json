@@ -17,10 +17,10 @@
           "lib/net45/EntityFramework.SqlServer.dll": {}
         }
       },
-      "FluentValidation.dnx/2.0.0-beta002": {
+      "FluentValidation.dnx/2.0.0-beta003": {
         "type": "package",
         "dependencies": {
-          "ReflectionBridge": "0.0.6"
+          "ReflectionBridge": "0.0.8"
         },
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -165,7 +165,7 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
-      "ReflectionBridge/0.0.6": {
+      "ReflectionBridge/0.0.8": {
         "type": "package",
         "dependencies": {
           "System.Collections": "4.0.11-beta-23516",
@@ -205,14 +205,10 @@
       },
       "System.Linq.Dynamic.dnx/2.0.0-beta001": {
         "type": "project",
-        "framework": "DNX,Version=v4.5.2",
         "dependencies": {
-          "FluentValidation.dnx": "2.0.0",
-          "ReflectionBridge": "0.0.6"
-        },
-        "frameworkAssemblies": [
-          "System.Data.Entity"
-        ]
+          "FluentValidation.dnx": "2.0.0-beta003",
+          "ReflectionBridge": "0.0.8"
+        }
       },
       "System.Linq.Parallel/4.0.1-beta-23516": {
         "type": "package",
@@ -385,10 +381,10 @@
           "lib/net45/EntityFramework.SqlServer.dll": {}
         }
       },
-      "FluentValidation.dnx/2.0.0-beta002": {
+      "FluentValidation.dnx/2.0.0-beta003": {
         "type": "package",
         "dependencies": {
-          "ReflectionBridge": "0.0.6"
+          "ReflectionBridge": "0.0.8"
         },
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -533,7 +529,7 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
-      "ReflectionBridge/0.0.6": {
+      "ReflectionBridge/0.0.8": {
         "type": "package",
         "dependencies": {
           "System.Collections": "4.0.11-beta-23516",
@@ -573,14 +569,10 @@
       },
       "System.Linq.Dynamic.dnx/2.0.0-beta001": {
         "type": "project",
-        "framework": "DNX,Version=v4.5.2",
         "dependencies": {
-          "FluentValidation.dnx": "2.0.0",
-          "ReflectionBridge": "0.0.6"
-        },
-        "frameworkAssemblies": [
-          "System.Data.Entity"
-        ]
+          "FluentValidation.dnx": "2.0.0-beta003",
+          "ReflectionBridge": "0.0.8"
+        }
       },
       "System.Linq.Parallel/4.0.1-beta-23516": {
         "type": "package",
@@ -753,10 +745,10 @@
           "lib/net45/EntityFramework.SqlServer.dll": {}
         }
       },
-      "FluentValidation.dnx/2.0.0-beta002": {
+      "FluentValidation.dnx/2.0.0-beta003": {
         "type": "package",
         "dependencies": {
-          "ReflectionBridge": "0.0.6"
+          "ReflectionBridge": "0.0.8"
         },
         "frameworkAssemblies": [
           "Microsoft.CSharp",
@@ -901,7 +893,7 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
-      "ReflectionBridge/0.0.6": {
+      "ReflectionBridge/0.0.8": {
         "type": "package",
         "dependencies": {
           "System.Collections": "4.0.11-beta-23516",
@@ -941,14 +933,10 @@
       },
       "System.Linq.Dynamic.dnx/2.0.0-beta001": {
         "type": "project",
-        "framework": "DNX,Version=v4.5.2",
         "dependencies": {
-          "FluentValidation.dnx": "2.0.0",
-          "ReflectionBridge": "0.0.6"
-        },
-        "frameworkAssemblies": [
-          "System.Data.Entity"
-        ]
+          "FluentValidation.dnx": "2.0.0-beta003",
+          "ReflectionBridge": "0.0.8"
+        }
       },
       "System.Linq.Parallel/4.0.1-beta-23516": {
         "type": "package",
@@ -1140,12 +1128,12 @@
         "tools/migrate.exe"
       ]
     },
-    "FluentValidation.dnx/2.0.0-beta002": {
+    "FluentValidation.dnx/2.0.0-beta003": {
       "type": "package",
-      "sha512": "NeloZZIxb1EnTV2Fey+a1RgcbGIdmu4x2tzfLrdDw57RJJe+3FDnyszSOfqnbpMuxEb5ca1NR5xo+Ylxlbr7CQ==",
+      "sha512": "NfqtnxD5NL+OsOeUscl0OM0hku+RPvZdUefdPd6/YE1FTy+8OUI6Eol0zzFAgi5xL3YMYyN1B/1oIbpAQ2Egkw==",
       "files": [
-        "FluentValidation.dnx.2.0.0-beta002.nupkg",
-        "FluentValidation.dnx.2.0.0-beta002.nupkg.sha512",
+        "FluentValidation.dnx.2.0.0-beta003.nupkg",
+        "FluentValidation.dnx.2.0.0-beta003.nupkg.sha512",
         "FluentValidation.dnx.nuspec",
         "lib/dnx451/FluentValidation.dnx.dll",
         "lib/dnx451/FluentValidation.dnx.xml",
@@ -1153,6 +1141,8 @@
         "lib/dnx452/FluentValidation.dnx.xml",
         "lib/dnxcore50/FluentValidation.dnx.dll",
         "lib/dnxcore50/FluentValidation.dnx.xml",
+        "lib/dotnet5.4/FluentValidation.dnx.dll",
+        "lib/dotnet5.4/FluentValidation.dnx.xml",
         "lib/net20/FluentValidation.dnx.dll",
         "lib/net20/FluentValidation.dnx.xml",
         "lib/net35/FluentValidation.dnx.dll",
@@ -1164,7 +1154,15 @@
         "lib/net451/FluentValidation.dnx.dll",
         "lib/net451/FluentValidation.dnx.xml",
         "lib/net452/FluentValidation.dnx.dll",
-        "lib/net452/FluentValidation.dnx.xml"
+        "lib/net452/FluentValidation.dnx.xml",
+        "lib/netcore50/FluentValidation.dnx.dll",
+        "lib/netcore50/FluentValidation.dnx.xml",
+        "lib/UAP10.0/FluentValidation.dnx.dll",
+        "lib/UAP10.0/FluentValidation.dnx.xml",
+        "lib/win/FluentValidation.dnx.dll",
+        "lib/win/FluentValidation.dnx.xml",
+        "lib/win81/FluentValidation.dnx.dll",
+        "lib/win81/FluentValidation.dnx.xml"
       ]
     },
     "Microsoft.Dnx.Compilation.Abstractions/1.0.0-rc1-final": {
@@ -1294,14 +1292,18 @@
         "tools/install.ps1"
       ]
     },
-    "ReflectionBridge/0.0.6": {
+    "ReflectionBridge/0.0.8": {
       "type": "package",
-      "sha512": "y70yKhBaIQJsfX9Zn/Ah6gl29xOiWzYOYfavZpeTWUp/eX3t6r/u2AYuc2pW2Cp88eMT+6EM7T6Pz+JExAB8+Q==",
+      "sha512": "Iu+8mKFaejdptfHDsYPuakr2Q054owSCcluTJARUTawmJGUyap4TYQZ4Fptx0FnWouyAlu9HARQmxHFHtDDBRQ==",
       "files": [
+        "lib/dnx451/ReflectionBridge.dll",
+        "lib/dnx451/ReflectionBridge.xml",
         "lib/dnx452/ReflectionBridge.dll",
         "lib/dnx452/ReflectionBridge.xml",
         "lib/dnxcore50/ReflectionBridge.dll",
         "lib/dnxcore50/ReflectionBridge.xml",
+        "lib/dotnet5.4/ReflectionBridge.dll",
+        "lib/dotnet5.4/ReflectionBridge.xml",
         "lib/net20/ReflectionBridge.dll",
         "lib/net20/ReflectionBridge.xml",
         "lib/net35/ReflectionBridge.dll",
@@ -1320,12 +1322,14 @@
         "lib/net461/ReflectionBridge.xml",
         "lib/netcore50/ReflectionBridge.dll",
         "lib/netcore50/ReflectionBridge.xml",
+        "lib/UAP10.0/ReflectionBridge.dll",
+        "lib/UAP10.0/ReflectionBridge.xml",
         "lib/win/ReflectionBridge.dll",
         "lib/win/ReflectionBridge.xml",
         "lib/win81/ReflectionBridge.dll",
         "lib/win81/ReflectionBridge.xml",
-        "ReflectionBridge.0.0.6.nupkg",
-        "ReflectionBridge.0.0.6.nupkg.sha512",
+        "ReflectionBridge.0.0.8.nupkg",
+        "ReflectionBridge.0.0.8.nupkg.sha512",
         "ReflectionBridge.nuspec"
       ]
     },

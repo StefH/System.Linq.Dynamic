@@ -18,7 +18,7 @@ namespace System.Linq.Dynamic
             CurrentDomain = new AppDomain();
         }
 
-#if DNXCORE50 || DNX451 || DNX452
+#if DNXCORE50 || DNX451 || DNX452 || DOTNET5_4
         public Assembly[] GetAssemblies()
         {
             var folder = Directory.GetCurrentDirectory();

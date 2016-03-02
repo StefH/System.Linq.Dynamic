@@ -11,8 +11,8 @@
     "releaseNotes": "initial support for dnx452 and dnxcore5",
 
     "dependencies": {
-        "FluentValidation.dnx": "2.0.0-*",
-        "ReflectionBridge": "0.0.6"
+        "FluentValidation.dnx": "2.0.0-beta003",
+        "ReflectionBridge": "0.0.8"
     },
 
     "compile": [
@@ -24,50 +24,6 @@
     },
 
     "frameworks": {
-        "net35": {
-            "frameworkAssemblies": {
-            }
-        },
-        "net40": {
-            "frameworkAssemblies": {
-                "System.Data.Entity": "4.0.0.0"
-            }
-        },
-        "net45": {
-            "frameworkAssemblies": {
-                "System.Data.Entity": "4.0.0.0"
-            }
-        },
-        "net451": {
-            "frameworkAssemblies": {
-                "System.Data.Entity": "4.0.0.0"
-            }
-        },
-        "net452": {
-            "frameworkAssemblies": {
-                "System.Data.Entity": "4.0.0.0"
-            }
-        },
-        "net46": {
-            "frameworkAssemblies": {
-                "System.Data.Entity": "4.0.0.0"
-            }
-        },
-        "net461": {
-            "frameworkAssemblies": {
-                "System.Data.Entity": "4.0.0.0"
-            }
-        },
-        "dnx451": {
-            "frameworkAssemblies": {
-                "System.Data.Entity": "4.0.0.0"
-            }
-        },
-        "dnx452": {
-            "frameworkAssemblies": {
-                "System.Data.Entity": "4.0.0.0"
-            }
-        },
         "dnxcore5": {
             "dependencies": {
                 "Microsoft.CSharp": "4.0.1-beta-*",
