@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Linq.Dynamic.Tests.Helpers.Entities;
 using System.Reflection;
+using Microsoft.Data.Entity;
 using TestToolsToXunitProxy;
 using Xunit.Sdk;
 
@@ -8,12 +9,12 @@ namespace System.Linq.Dynamic.Tests
 {
     class DisplayTestMethodNameAttribute : BeforeAfterTestAttribute
     {
-        public void Before(MethodInfo methodUnderTest)
+        public override void Before(MethodInfo methodUnderTest)
         {
             Console.WriteLine("Setup for test '{0}.'", methodUnderTest.Name);
         }
 
-        public void After(MethodInfo methodUnderTest)
+        public override void After(MethodInfo methodUnderTest)
         {
             Console.WriteLine("TearDown for test '{0}.'", methodUnderTest.Name);
         }
@@ -32,16 +33,18 @@ namespace System.Linq.Dynamic.Tests
 
         public EntitiesTests()
         {
-            var connectionString = string.Format(@"Data Source=(localdb)\v11.0;Initial Catalog=DynamicLinqTestDb_{0};Integrated Security=True", Guid.NewGuid());
+            var builder = new DbContextOptionsBuilder();
+            builder.UseSqlite($"Filename=DynamicLinqTestDb_{Guid.NewGuid()}.db");
 
-            _context = new BlogContext(connectionString);
-            _context.Database.Delete();
+            _context = new BlogContext(builder.Options);
+            _context.Database.EnsureDeleted();
+            _context.Database.EnsureCreated();
         }
 
         // Use TestCleanup to run code after each test has run
         public void Dispose()
         {
-            _context.Database.Delete();
+            _context.Database.EnsureDeleted();
 
             _context.Dispose();
             _context = null;
@@ -51,7 +54,7 @@ namespace System.Linq.Dynamic.Tests
         {
             for (int i = 0; i < blogCount; i++)
             {
-                var blog = new Blog() { Name = "Blog" + (i + 1) };
+                var blog = new Blog { Name = "Blog" + (i + 1) };
 
                 _context.Blogs.Add(blog);
 
@@ -60,7 +63,7 @@ namespace System.Linq.Dynamic.Tests
                     var post = new Post()
                     {
                         Blog = blog,
-                        Title = String.Format("Blog {0} - Post {1}", i + 1, j + 1),
+                        Title = $"Blog {i + 1} - Post {j + 1}",
                         Content = "My Content",
                         PostDate = DateTime.Today.AddDays(-Rnd.Next(0, 100)).AddSeconds(Rnd.Next(0, 30000)),
                         NumberOfReads = Rnd.Next(0, 5000)
@@ -147,7 +150,8 @@ namespace System.Linq.Dynamic.Tests
                 Assert.AreEqual(expectedRow.BlogId, testRow.BlogId);
                 Assert.AreEqual(expectedRow.Name, testRow.Name);
 
-                CollectionAssert.AreEqual(expectedRow.Posts, testRow.Posts);
+                Assert.IsTrue(expectedRow.Posts != null);
+                CollectionAssert.AreEqual(expectedRow.Posts.ToList(), testRow.Posts);
             }
         }
 
@@ -317,7 +321,6 @@ namespace System.Linq.Dynamic.Tests
             //remove all posts from first record (to allow Defaults case to validate)
             _context.Posts.RemoveRange(_context.Blogs.OrderBy(x => x.BlogId).First<Blog>().Posts);
             _context.SaveChanges();
-
 
             //Act
             var firstExpected = _context.Blogs.OrderBy(x => x.Posts.OrderBy(y => y.PostDate).FirstOrDefault().PostDate).Select(x => x.BlogId);
