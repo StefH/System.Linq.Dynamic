@@ -1,11 +1,12 @@
-﻿using System.Data.Entity;
+﻿using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Infrastructure;
 
 namespace System.Linq.Dynamic.Tests.Helpers.Entities
 {
     public class BlogContext : DbContext
     {
-        public BlogContext(string connectionString)
-            : base(connectionString)
+        public BlogContext(DbContextOptions options)
+            : base(options)
         {
         }
 

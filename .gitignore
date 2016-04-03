@@ -234,3 +234,6 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+Src/System.Linq.Dynamic.dnx/project.lock.json
+Src/System.Linq.Dynamic.dnx.Tests/project.lock.json
