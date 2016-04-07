@@ -1,0 +1,45 @@
+{
+    "version": "1.0.0.0-*",
+    "authors": [ "Stef Heyenrath" ],
+    "dependencies": {
+        "FluentValidation.dnx": "2.0.0-*",
+        "System.Linq.Dynamic.Core": "2.0.0-*"
+    },
+
+    "compile": [
+        "../System.Linq.Dynamic.Tests/Helpers/SampleModels.cs",
+        "../System.Linq.Dynamic.Tests/Helpers/Entities/Sample*.cs"
+    ],
+
+    "compilationOptions": {
+    },
+
+    "commands": {
+        "ConsoleTestApp": "run"
+    },
+
+    "frameworks": {
+        "dnxcore5": {
+            "dependencies": {
+                "Microsoft.CSharp": "4.0.1-beta-*",
+
+                "System.Runtime": "4.0.21-beta-*",
+                "System.Runtime.Extensions": "4.0.11-beta-*",
+                "System.Runtime.Serialization.Primitives": "4.1.0-beta-*",
+
+                "System.Console": "4.0.0-beta-*",
+
+                "System.Linq.Queryable": "4.0.1-beta-*",
+
+                "System.IO": "4.0.11-beta-*",
+                "System.IO.FileSystem": "4.0.1-beta-*",
+
+                "System.Globalization": "4.0.11-beta-*",
+
+                "System.Resources.ResourceManager": "4.0.1-beta-*",
+
+                "System.Text.RegularExpressions": "4.0.11-beta-*"
+            }
+        }
+    }
+}

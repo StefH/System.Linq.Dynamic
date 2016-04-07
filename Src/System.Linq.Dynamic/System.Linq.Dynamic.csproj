@@ -61,58 +61,58 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-      <Compile Include="..\System.Linq.Dynamic.dnx\ClassFactory.cs">
+      <Compile Include="..\System.Linq.Dynamic.Core\ClassFactory.cs">
       <Link>ClassFactory.cs</Link>
     </Compile>
-	    <Compile Include="..\System.Linq.Dynamic.dnx\DynamicClass.cs">
+	    <Compile Include="..\System.Linq.Dynamic.Core\DynamicClass.cs">
       <Link>DynamicClass.cs</Link>
     </Compile>
-	    <Compile Include="..\System.Linq.Dynamic.dnx\DynamicExpression.cs">
+	    <Compile Include="..\System.Linq.Dynamic.Core\DynamicExpression.cs">
       <Link>DynamicExpression.cs</Link>
     </Compile>
-	    <Compile Include="..\System.Linq.Dynamic.dnx\DynamicLinqTypeProvider.cs">
+	    <Compile Include="..\System.Linq.Dynamic.Core\DynamicLinqTypeProvider.cs">
       <Link>DynamicLinqTypeProvider.cs</Link>
     </Compile>
-	    <Compile Include="..\System.Linq.Dynamic.dnx\DynamicObjectClass.cs">
+	    <Compile Include="..\System.Linq.Dynamic.Core\DynamicObjectClass.cs">
       <Link>DynamicObjectClass.cs</Link>
     </Compile>
-	    <Compile Include="..\System.Linq.Dynamic.dnx\DynamicQueryable.cs">
+	    <Compile Include="..\System.Linq.Dynamic.Core\DynamicQueryable.cs">
       <Link>DynamicQueryable.cs</Link>
     </Compile>
-	    <Compile Include="..\System.Linq.Dynamic.dnx\DynamicOrdering.cs">
+	    <Compile Include="..\System.Linq.Dynamic.Core\DynamicOrdering.cs">
       <Link>DynamicOrdering.cs</Link>
     </Compile>
-	    <Compile Include="..\System.Linq.Dynamic.dnx\DynamicProperty.cs">
+	    <Compile Include="..\System.Linq.Dynamic.Core\DynamicProperty.cs">
       <Link>DynamicProperty.cs</Link>
     </Compile>
-	    <Compile Include="..\System.Linq.Dynamic.dnx\ExpressionConverter.cs">
+	    <Compile Include="..\System.Linq.Dynamic.Core\ExpressionConverter.cs">
       <Link>ExpressionConverter.cs</Link>
     </Compile>
-	    <Compile Include="..\System.Linq.Dynamic.dnx\ExpressionParser.NetFX_backup.cs">
+	    <Compile Include="..\System.Linq.Dynamic.Core\ExpressionParser.NetFX_backup.cs">
       <Link>ExpressionParser.NetFX_backup.cs</Link>
     </Compile>
-	<Compile Include="..\System.Linq.Dynamic.dnx\ExpressionParser.cs">
+	<Compile Include="..\System.Linq.Dynamic.Core\ExpressionParser.cs">
       <Link>ExpressionParser.cs</Link>
     </Compile>
-	<Compile Include="..\System.Linq.Dynamic.dnx\GlobalConfig.cs">
+	<Compile Include="..\System.Linq.Dynamic.Core\GlobalConfig.cs">
       <Link>GlobalConfig.cs</Link>
     </Compile>
-	<Compile Include="..\System.Linq.Dynamic.dnx\GlobalSuppressions.cs">
+	<Compile Include="..\System.Linq.Dynamic.Core\GlobalSuppressions.cs">
       <Link>GlobalSuppressions.cs</Link>
     </Compile>
-	<Compile Include="..\System.Linq.Dynamic.dnx\GroupResult.cs">
+	<Compile Include="..\System.Linq.Dynamic.Core\GroupResult.cs">
       <Link>GroupResult.cs</Link>
     </Compile>
-	<Compile Include="..\System.Linq.Dynamic.dnx\IDynamicLinkTypeProvider.cs">
+	<Compile Include="..\System.Linq.Dynamic.Core\IDynamicLinkTypeProvider.cs">
       <Link>IDynamicLinkTypeProvider.cs</Link>
     </Compile>
-	<Compile Include="..\System.Linq.Dynamic.dnx\ParseException.cs">
+	<Compile Include="..\System.Linq.Dynamic.Core\ParseException.cs">
       <Link>ParseException.cs</Link>
     </Compile>
-	<Compile Include="..\System.Linq.Dynamic.dnx\BasicQueryable.cs">
+	<Compile Include="..\System.Linq.Dynamic.Core\BasicQueryable.cs">
       <Link>BasicQueryable.cs</Link>
     </Compile>
-	<Compile Include="..\System.Linq.Dynamic.dnx\Res.cs">
+	<Compile Include="..\System.Linq.Dynamic.Core\Res.cs">
       <Link>Res.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
