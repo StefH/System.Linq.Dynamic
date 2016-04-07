@@ -239,7 +239,7 @@ namespace System.Linq.Dynamic.Tests
             var testResult = testListQry.OrderBy("Roles.First().Name").Select("Id");
 
             //Assert
-#if NET35 || DNX452
+#if NET35 || DNX452 || DNXCORE50
             CollectionAssert.AreEqual(realResult, testResult.Cast<Guid>().ToArray());
 #else
             CollectionAssert.AreEqual(realResult, testResult.ToDynamicArray());
@@ -259,7 +259,7 @@ namespace System.Linq.Dynamic.Tests
             var testResult = testListQry.OrderBy("Roles.Single().Name").Select("Id");
 
             //Assert
-#if NET35 || DNX452
+#if NET35 || DNX452 || DNXCORE50
             CollectionAssert.AreEqual(realResult, testResult.Cast<Guid>().ToArray());
 #else
             CollectionAssert.AreEqual(realResult, testResult.ToDynamicArray());

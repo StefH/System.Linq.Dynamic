@@ -130,12 +130,11 @@ namespace System.Linq.Dynamic.Tests
             var userNames = qry.Select("UserName");
             var userFirstName = qry.Select("new (UserName, Profile.FirstName as MyFirstName)");
             var userRoles = qry.Select("new (UserName, Roles.Select(Id) AS RoleIds)");
-
-
+            
             //Assert
             CollectionAssert.AreEqual(range.Select(x => x * x).ToArray(), rangeResult.Cast<int>().ToArray());
 
-#if NET35
+#if NET35 || DNXCORE50
             CollectionAssert.AreEqual(testList.Select(x => x.UserName).ToArray(), userNames.AsEnumerable().Cast<string>().ToArray());
             CollectionAssert.AreEqual(
                 testList.Select(x => "{UserName=" + x.UserName + ", MyFirstName=" + x.Profile.FirstName + "}").ToArray(),
@@ -297,7 +296,7 @@ namespace System.Linq.Dynamic.Tests
             //Assert
             var realResult = realQuery.ToArray();
 
-#if NET35
+#if NET35 || DNXCORE50
             var dynamicResult = dynamicQuery.Cast<object>().ToArray();
 
             Assert.AreEqual(realResult.Length, dynamicResult.Length);

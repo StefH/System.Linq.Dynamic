@@ -1,8 +1,5 @@
-﻿using FluentValidationNA;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using FluentValidationNA;
 
 namespace System.Linq.Dynamic.Tests.Helpers
 {
@@ -26,16 +23,16 @@ namespace System.Linq.Dynamic.Tests.Helpers
 
             for (int i = 0; i < total; i++)
             {
-                var user = new User()
+                var user = new User
                 {
                     Id = Guid.NewGuid(),
-                    UserName = "User" + i.ToString(),
+                    UserName = "User" + i,
                     Income = ((i) % 15) * 100
                 };
 
                 if (!allowNullableProfiles || (i % 8) != 5)
                 {
-                    user.Profile = new UserProfile()
+                    user.Profile = new UserProfile
                     {
                         FirstName = "FirstName" + i,
                         LastName = "LastName" + i,
@@ -63,13 +60,13 @@ namespace System.Linq.Dynamic.Tests.Helpers
 
     public class Role
     {
-        public static readonly Role[] StandardRoles = new Role[] {
-            new Role() { Name="Admin"},
-            new Role() { Name="User"},
-            new Role() { Name="Guest"},
-            new Role() { Name="G"},
-            new Role() { Name="J"},
-            new Role() { Name="A"},
+        public static readonly Role[] StandardRoles = {
+            new Role { Name="Admin"},
+            new Role { Name="User"},
+            new Role { Name="Guest"},
+            new Role { Name="G"},
+            new Role { Name="J"},
+            new Role { Name="A"},
         };
 
         public Role()

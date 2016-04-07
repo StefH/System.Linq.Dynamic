@@ -4,7 +4,7 @@ using TestToolsToXunitProxy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 #endif
 
-#if !(NET35|| DNX452)
+#if !(NET35|| DNX452 || DNXCORE50)
 using System.Threading.Tasks;
 #endif
 
@@ -13,7 +13,7 @@ namespace System.Linq.Dynamic.Tests
     [TestClass]
     public class InternalTests
     {
-#if !(NET35|| DNX452)
+#if !(NET35|| DNX452 || DNXCORE50)
         [TestMethod]
         public void ClassFactory_LoadTest()
         {

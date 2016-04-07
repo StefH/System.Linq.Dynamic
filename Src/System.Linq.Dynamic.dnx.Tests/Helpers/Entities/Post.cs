@@ -13,19 +13,5 @@ namespace System.Linq.Dynamic.Tests.Helpers.Entities
         public DateTime PostDate { get; set; }
 
         public int NumberOfReads { get; set; }
-
-        //public override int GetHashCode()
-        //{
-        //    return PostId.GetHashCode();
-        //}
-
-        //public override bool Equals(object obj)
-        //{
-        //    var other = obj as Post;
-
-        //    if (other == null) return false;
-
-        //    return PostId.Equals(other.PostId);
-        //}
     }
 }

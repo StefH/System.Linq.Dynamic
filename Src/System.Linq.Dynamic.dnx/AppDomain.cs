@@ -1,8 +1,8 @@
-﻿#if DNXCORE50 || DNX451 || DNX452 || NETFX
+﻿#if DNXCORE50 || NETFX
 using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace System.Linq.Dynamic
 {
@@ -18,23 +18,24 @@ namespace System.Linq.Dynamic
             CurrentDomain = new AppDomain();
         }
 
-#if DNXCORE50 || DNX451 || DNX452 || DOTNET5_4
+#if DNXCORE50
         public Assembly[] GetAssemblies()
         {
-            var folder = Directory.GetCurrentDirectory();
+            var assemblyNames = PlatformServices.Default.LibraryManager.GetLibraries().SelectMany(lib => lib.Assemblies).Distinct().ToArray();
 
             var assemblies = new List<Assembly>();
-            foreach (string filePath in Directory.EnumerateFiles(folder))
+            foreach (var assembly in assemblyNames.Select(Assembly.Load))
             {
-                var file = new FileInfo(filePath);
-                if (file.Extension == ".dll" || file.Extension == ".exe")
+                try
                 {
-                    var name = new AssemblyName { Name = Path.GetFileNameWithoutExtension(file.Name) };
-                    var asm = Assembly.Load(name);
-                    assemblies.Add(asm);
+                    var dummy = assembly.DefinedTypes.ToArray(); // just load all types and skip this assembly of one or more types cannot be resolved
+                    assemblies.Add(assembly);
+                }
+                catch (Exception)
+                {
                 }
             }
-
+            
             return assemblies.ToArray();
         }
 #else

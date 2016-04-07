@@ -1,25 +1,12 @@
-﻿using System.Collections;
+﻿#if !DNXCORE50
+using System.Collections;
 using System.Linq.Dynamic.Tests.Helpers.Entities;
-using System.Reflection;
 using Microsoft.Data.Entity;
 using TestToolsToXunitProxy;
-using Xunit.Sdk;
+using Assert = Xunit.Assert;
 
 namespace System.Linq.Dynamic.Tests
 {
-    class DisplayTestMethodNameAttribute : BeforeAfterTestAttribute
-    {
-        public override void Before(MethodInfo methodUnderTest)
-        {
-            Console.WriteLine("Setup for test '{0}.'", methodUnderTest.Name);
-        }
-
-        public override void After(MethodInfo methodUnderTest)
-        {
-            Console.WriteLine("TearDown for test '{0}.'", methodUnderTest.Name);
-        }
-    }
-
     /// <summary>
     /// Summary description for EntitiesTests
     /// </summary>
@@ -27,7 +14,7 @@ namespace System.Linq.Dynamic.Tests
     {
         BlogContext _context;
 
-        #region Entities Test Support
+#region Entities Test Support
 
         static readonly Random Rnd = new Random(1);
 
@@ -76,9 +63,9 @@ namespace System.Linq.Dynamic.Tests
             _context.SaveChanges();
         }
 
-        #endregion
+#endregion
 
-        #region Select Tests
+#region Select Tests
 
         [TestMethod]
         public void Entities_Select_SingleColumn()
@@ -92,7 +79,7 @@ namespace System.Linq.Dynamic.Tests
             var test = _context.Blogs.Select<int>("BlogId").ToArray();
 
             //Assert
-            Xunit.Assert.Equal<ICollection>(expected, test);
+            Assert.Equal<ICollection>(expected, test);
         }
 
         [TestMethod]
@@ -129,35 +116,35 @@ namespace System.Linq.Dynamic.Tests
             CollectionAssert.AreEqual(expected, test);
         }
 
-        [TestMethod]
-        public void Entities_Select_BlogAndPosts()
-        {
-            //Arrange
-            PopulateTestData(5, 5);
+        //[TestMethod]
+        //public void Entities_Select_BlogAndPosts()
+        //{
+        //    //Arrange
+        //    PopulateTestData(5, 5);
 
-            var expected = _context.Blogs.Select(x => new { x.BlogId, x.Name, x.Posts }).ToArray();
+        //    var expected = _context.Blogs.Select(x => new { x.BlogId, x.Name, x.Posts }).ToArray();
 
-            //Act
-            var test = _context.Blogs.Select("new (BlogId, Name, Posts)").ToDynamicArray();
+        //    //Act
+        //    var test = _context.Blogs.Select("new (BlogId, Name, Posts)").ToDynamicArray();
 
-            //Assert
-            Assert.AreEqual(expected.Length, test.Length);
-            for (int i = 0; i < expected.Length; i++)
-            {
-                var expectedRow = expected[i];
-                var testRow = test[i];
+        //    //Assert
+        //    Assert.AreEqual(expected.Length, test.Length);
+        //    for (int i = 0; i < expected.Length; i++)
+        //    {
+        //        var expectedRow = expected[i];
+        //        var testRow = test[i];
 
-                Assert.AreEqual(expectedRow.BlogId, testRow.BlogId);
-                Assert.AreEqual(expectedRow.Name, testRow.Name);
+        //        Assert.AreEqual(expectedRow.BlogId, testRow.BlogId);
+        //        Assert.AreEqual(expectedRow.Name, testRow.Name);
 
-                Assert.IsTrue(expectedRow.Posts != null);
-                CollectionAssert.AreEqual(expectedRow.Posts.ToList(), testRow.Posts);
-            }
-        }
+        //        Assert.IsTrue(expectedRow.Posts != null);
+        //        CollectionAssert.AreEqual(expectedRow.Posts.ToList(), testRow.Posts);
+        //    }
+        //}
 
-        #endregion
+#endregion
 
-        #region GroupBy Tests
+#region GroupBy Tests
 
         [TestMethod]
         public void Entities_GroupBy_SingleKey()
@@ -171,7 +158,7 @@ namespace System.Linq.Dynamic.Tests
             var test = _context.Posts.GroupBy("BlogId").ToDynamicArray();
 
             //Assert
-            Assert.AreEqual(expected.Length, test.Length);
+            TestToolsToXunitProxy.Assert.AreEqual(expected.Length, test.Length);
             for (int i = 0; i < expected.Length; i++)
             {
                 var expectedRow = expected[i];
@@ -179,7 +166,7 @@ namespace System.Linq.Dynamic.Tests
                 //For some reason, the DynamicBinder doesn't allow us to access values of the Group object, so we have to cast first
                 var testRow = (IGrouping<int, Post>)test[i];
 
-                Assert.AreEqual(expectedRow.Key, testRow.Key);
+                TestToolsToXunitProxy.Assert.AreEqual(expectedRow.Key, testRow.Key);
                 CollectionAssert.AreEqual(expectedRow.ToArray(), testRow.ToArray());
             }
         }
@@ -196,7 +183,7 @@ namespace System.Linq.Dynamic.Tests
             var test = _context.Posts.GroupBy("new (BlogId, PostDate)").ToDynamicArray();
 
             //Assert
-            Assert.AreEqual(expected.Length, test.Length);
+            TestToolsToXunitProxy.Assert.AreEqual(expected.Length, test.Length);
             for (int i = 0; i < expected.Length; i++)
             {
                 var expectedRow = expected[i];
@@ -204,8 +191,8 @@ namespace System.Linq.Dynamic.Tests
                 //For some reason, the DynamicBinder doesn't allow us to access values of the Group object, so we have to cast first
                 var testRow = (IGrouping<DynamicClass, Post>)test[i];
 
-                Assert.AreEqual(expectedRow.Key.BlogId, ((dynamic)testRow.Key).BlogId);
-                Assert.AreEqual(expectedRow.Key.PostDate, ((dynamic)testRow.Key).PostDate);
+                TestToolsToXunitProxy.Assert.AreEqual(expectedRow.Key.BlogId, ((dynamic)testRow.Key).BlogId);
+                TestToolsToXunitProxy.Assert.AreEqual(expectedRow.Key.PostDate, ((dynamic)testRow.Key).PostDate);
                 CollectionAssert.AreEqual(expectedRow.ToArray(), testRow.ToArray());
             }
         }
@@ -222,7 +209,7 @@ namespace System.Linq.Dynamic.Tests
             var test = _context.Posts.GroupBy("PostDate", "Title").ToDynamicArray();
 
             //Assert
-            Assert.AreEqual(expected.Length, test.Length);
+            TestToolsToXunitProxy.Assert.AreEqual(expected.Length, test.Length);
             for (int i = 0; i < expected.Length; i++)
             {
                 var expectedRow = expected[i];
@@ -230,7 +217,7 @@ namespace System.Linq.Dynamic.Tests
                 //For some reason, the DynamicBinder doesn't allow us to access values of the Group object, so we have to cast first
                 var testRow = (IGrouping<DateTime, String>)test[i];
 
-                Assert.AreEqual(expectedRow.Key, testRow.Key);
+                TestToolsToXunitProxy.Assert.AreEqual(expectedRow.Key, testRow.Key);
                 CollectionAssert.AreEqual(expectedRow.ToArray(), testRow.ToArray());
             }
         }
@@ -247,7 +234,7 @@ namespace System.Linq.Dynamic.Tests
             var test = _context.Posts.GroupBy("PostDate", "new (Title, Content)").ToDynamicArray();
 
             //Assert
-            Assert.AreEqual(expected.Length, test.Length);
+            TestToolsToXunitProxy.Assert.AreEqual(expected.Length, test.Length);
             for (int i = 0; i < expected.Length; i++)
             {
                 var expectedRow = expected[i];
@@ -255,7 +242,7 @@ namespace System.Linq.Dynamic.Tests
                 //For some reason, the DynamicBinder doesn't allow us to access values of the Group object, so we have to cast first
                 var testRow = (IGrouping<DateTime, DynamicClass>)test[i];
 
-                Assert.AreEqual(expectedRow.Key, testRow.Key);
+                TestToolsToXunitProxy.Assert.AreEqual(expectedRow.Key, testRow.Key);
                 CollectionAssert.AreEqual(
                     expectedRow.ToArray(),
                     testRow.Cast<dynamic>().Select(x => new { Title = (string)x.Title, Content = (string)x.Content }).ToArray());
@@ -274,14 +261,14 @@ namespace System.Linq.Dynamic.Tests
             var test = _context.Posts.GroupBy("PostDate").Select("new(Key, Count() AS Count)").ToDynamicArray();
 
             //Assert
-            Assert.AreEqual(expected.Length, test.Length);
+            TestToolsToXunitProxy.Assert.AreEqual(expected.Length, test.Length);
             for (int i = 0; i < expected.Length; i++)
             {
                 var expectedRow = expected[i];
                 var testRow = test[i];
 
-                Assert.AreEqual(expectedRow.Key, testRow.Key);
-                Assert.AreEqual(expectedRow.Count, testRow.Count);
+                TestToolsToXunitProxy.Assert.AreEqual(expectedRow.Key, testRow.Key);
+                TestToolsToXunitProxy.Assert.AreEqual(expectedRow.Count, testRow.Count);
             }
         }
 
@@ -297,20 +284,20 @@ namespace System.Linq.Dynamic.Tests
             var test = _context.Posts.GroupBy("PostDate").Select("new(Key, Sum(NumberOfReads) AS Reads)").ToDynamicArray();
 
             //Assert
-            Assert.AreEqual(expected.Length, test.Length);
+            TestToolsToXunitProxy.Assert.AreEqual(expected.Length, test.Length);
             for (int i = 0; i < expected.Length; i++)
             {
                 var expectedRow = expected[i];
                 var testRow = test[i];
 
-                Assert.AreEqual(expectedRow.Key, testRow.Key);
-                Assert.AreEqual(expectedRow.Reads, testRow.Reads);
+                TestToolsToXunitProxy.Assert.AreEqual(expectedRow.Key, testRow.Key);
+                TestToolsToXunitProxy.Assert.AreEqual(expectedRow.Reads, testRow.Reads);
             }
         }
 
-        #endregion
+#endregion
 
-        #region Executor Tests
+#region Executor Tests
 
         [TestMethod]
         public void FirstOrDefault_AsStringExpressions()
@@ -330,6 +317,7 @@ namespace System.Linq.Dynamic.Tests
             CollectionAssert.AreEqual(firstExpected.ToArray(), firstTest.ToArray());
         }
 
-        #endregion
+#endregion
     }
 }
+#endif
