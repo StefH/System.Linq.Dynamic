@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Text;
 
-namespace System.Linq.Dynamic
+namespace DynamicLib
 {
     /// <summary>
     /// Provides a base class for dynamic objects created by using the <see cref="DynamicQueryable.Select(IQueryable,string,object[])"/> 
@@ -9,6 +9,8 @@ namespace System.Linq.Dynamic
     /// </summary>
     public abstract class DynamicClass
     {
+        public string Test { get; set; }
+
         /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>

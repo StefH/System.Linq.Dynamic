@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Dynamic.Tests.Helpers;
+using System.Reflection;
 
 namespace System.Linq.Dynamic.dnx.ConsoleTestApp
 {
@@ -21,12 +22,23 @@ namespace System.Linq.Dynamic.dnx.ConsoleTestApp
         {
             Console.WriteLine("--start");
 
+            Select();
+            TestDyn();
             ExpressionTests_Enum();
             Where();
             ExpressionTests_Sum();
-            Select();
-
+            
             Console.WriteLine("--end");
+        }
+
+        private static void TestDyn()
+        {
+            var user = new User { UserName = "x" };
+
+            dynamic userD = user;
+            string username = userD.UserName;
+
+            Console.WriteLine("..." + username);
         }
 
         public static void ExpressionTests_Enum()
@@ -126,7 +138,12 @@ namespace System.Linq.Dynamic.dnx.ConsoleTestApp
 
             var userRole = userRoles.First();
             Console.WriteLine(">>>>>>>>>>>>>>>>>>" + userRole.ToString());
-            Console.WriteLine(">>>>>>>>>>>>>>>>>> UserName" + userRole.UserName);
+
+            PropertyInfo[] props = userRole.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            Console.WriteLine(">>>>>>>>>>>>>>>>>> GetProperties = {0}", string.Join(", ", props.Select(p => p.Name)));
+            Console.WriteLine(">>>>>>>>>>>>>>>>>> GetPropertyValues = {0}", string.Join(", ", props.Select(p => p.GetValue(userRole, null))));
+
+            string name = userRole.UserName;
 
             Guid[] result = Enumerable.ToArray(userRole.RoleIds ?? new object[0]);
 
