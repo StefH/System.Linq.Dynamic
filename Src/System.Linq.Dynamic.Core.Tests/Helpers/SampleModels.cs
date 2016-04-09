@@ -18,7 +18,7 @@ namespace System.Linq.Dynamic.Tests.Helpers
 
         public static IList<User> GenerateSampleModels(int total, bool allowNullableProfiles = false)
         {
-            Check.InRange(total, x => x > 0, nameof(total));
+            Check.Condition(total, x => x > 0, nameof(total));
             
             var list = new List<User>();
 

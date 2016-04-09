@@ -12,7 +12,7 @@ namespace System.Linq.Dynamic.Validation
     [DebuggerStepThrough]
     public static class Check
     {
-        public static T InRange<T>([NoEnumeration] T value, [NotNull] Predicate<T> condition, [InvokerParameterName] [NotNull] string parameterName)
+        public static T Condition<T>([NoEnumeration] T value, [NotNull] Predicate<T> condition, [InvokerParameterName] [NotNull] string parameterName)
         {
             NotNull(condition, nameof(condition));
             NotNull(value, nameof(value));

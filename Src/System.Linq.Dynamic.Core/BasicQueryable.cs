@@ -23,7 +23,7 @@ namespace System.Linq.Dynamic
         public static IQueryable Take(this IQueryable source, int count)
         {
             Check.NotNull(source, nameof(source));
-            Check.InRange(count, x => x > 0, nameof(source));
+            Check.Condition(count, x => x > 0, nameof(source));
 
             return source.Provider.CreateQuery(
                 Expression.Call(
@@ -41,7 +41,7 @@ namespace System.Linq.Dynamic
         public static IQueryable Skip(this IQueryable source, int count)
         {
             Check.NotNull(source, nameof(source));
-            Check.InRange(count, x => x > 0, nameof(source));
+            Check.Condition(count, x => x > 0, nameof(source));
 
             //no need to skip if count is zero
             if (count == 0) return source;
