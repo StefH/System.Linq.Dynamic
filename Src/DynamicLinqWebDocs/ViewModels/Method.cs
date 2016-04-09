@@ -1,9 +1,6 @@
-﻿using DynamicLinqWebDocs.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Web;
+using DynamicLinqWebDocs.Models;
 
 namespace DynamicLinqWebDocs.ViewModels
 {
@@ -17,7 +14,7 @@ namespace DynamicLinqWebDocs.ViewModels
 
         public string Description { get; set; }
 
-        public IList<Models.Argument> Arguments { get; set; }
+        public IList<Argument> Arguments { get; set; }
 
         public bool HasParamsArgument { get; set; }
 
@@ -31,7 +28,7 @@ namespace DynamicLinqWebDocs.ViewModels
 
         public bool IsExtensionMethod { get; set; }
 
-        public IList<Models.Example> Examples { get; set; }
+        public IList<Example> Examples { get; set; }
 
         public Frameworks Frameworks { get; set; }
 

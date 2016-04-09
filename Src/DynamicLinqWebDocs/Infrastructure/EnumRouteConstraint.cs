@@ -9,7 +9,7 @@ namespace DynamicLinqWebDocs.Infrastructure
 {
     public class EnumRouteConstraint : IRouteConstraint
     {
-        HashSet<string> _enumValues;
+        readonly HashSet<string> _enumValues;
 
         public EnumRouteConstraint(string enumTypeName)
         {

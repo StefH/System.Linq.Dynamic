@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using MarkdownSharp;
 
 namespace DynamicLinqWebDocs.Infrastructure
 {
@@ -35,7 +34,7 @@ namespace DynamicLinqWebDocs.Infrastructure
         {
             if (String.IsNullOrWhiteSpace(value)) return null;
 
-            var md = new MarkdownSharp.Markdown();
+            var md = new Markdown();
 
             //if (convertToCode) value = ConvertToCode(value);
 
@@ -69,7 +68,7 @@ namespace DynamicLinqWebDocs.Infrastructure
 
         class HtmlBootstrapNote : IDisposable
         {
-            TextWriter _writer;
+            readonly TextWriter _writer;
 
             public HtmlBootstrapNote(ViewContext context)
             {

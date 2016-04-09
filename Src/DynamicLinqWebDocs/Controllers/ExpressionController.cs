@@ -1,17 +1,15 @@
-﻿using DynamicLinqWebDocs.Infrastructure;
-using DynamicLinqWebDocs.Infrastructure.Data;
-using SimpleMvcSitemap;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
+using DynamicLinqWebDocs.Infrastructure;
+using DynamicLinqWebDocs.Infrastructure.Data;
+using SimpleMvcSitemap;
 
 namespace DynamicLinqWebDocs.Controllers
 {
     public class ExpressionController : Controller
     {
-        IDataRepo _repo = new RealDataRepo();
+        readonly IDataRepo _repo = new RealDataRepo();
 
         [Route("Expressions")]
         public ActionResult Index()
