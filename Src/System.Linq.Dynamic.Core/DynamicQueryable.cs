@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Dynamic.Validation;
 using System.Linq.Expressions;
 using ReflectionBridge.Extensions;
-using System.Linq.Dynamic.Validation;
 
 namespace System.Linq.Dynamic
 {

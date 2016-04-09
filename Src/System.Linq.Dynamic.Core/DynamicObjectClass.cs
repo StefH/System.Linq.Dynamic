@@ -10,7 +10,7 @@ namespace System.Linq.Dynamic
     /// </summary>
     public class DynamicObjectClass : DynamicObject
     {
-        Dictionary<string, object> _properties = new Dictionary<string, object>();
+        readonly Dictionary<string, object> _properties = new Dictionary<string, object>();
 
         public DynamicObjectClass(KeyValuePair<string, object> _1)
         {
@@ -160,7 +160,7 @@ namespace System.Linq.Dynamic
 
             if (other == null) return false;
 
-            if (this._properties.Count != other._properties.Count)
+            if (_properties.Count != other._properties.Count)
                 return false;
             return _properties.Keys.All(x => this[x].Equals(other[x]));
         }

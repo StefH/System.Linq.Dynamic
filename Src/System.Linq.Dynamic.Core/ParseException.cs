@@ -13,7 +13,7 @@ namespace System.Linq.Dynamic
 #endif
     public sealed class ParseException : Exception
     {
-        int _position;
+        readonly int _position;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParseException"/> class with a specified error message and position.
@@ -23,7 +23,7 @@ namespace System.Linq.Dynamic
         public ParseException(string message, int position)
             : base(message)
         {
-            this._position = position;
+            _position = position;
         }
 
         /// <summary>

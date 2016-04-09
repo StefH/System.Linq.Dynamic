@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace System.Linq.Dynamic
+﻿namespace System.Linq.Dynamic
 {
     /// <summary>
     /// Static configuration class for Dynamic Linq.

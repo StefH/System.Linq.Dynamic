@@ -1,5 +1,6 @@
 ﻿namespace System.Reflection.Emit
 {
+    // ReSharper disable once InconsistentNaming
     public static class ILGeneratorExtensions
     {
         public static LocalBuilder DeclareLocal(this ILGenerator gen, TypeBuilder tb)

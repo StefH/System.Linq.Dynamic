@@ -18,13 +18,13 @@ namespace System.Linq.Dynamic
             PropertyInfo[] props = GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
             var sb = new StringBuilder();
 
-            sb.AppendFormat("{0} in {1} : ", GetType().FullName, GetType().GetTypeInfo().Assembly.FullName);
+            //sb.AppendFormat("{0} in {1} : ", GetType().FullName, GetType().GetTypeInfo().Assembly.FullName);
 
             sb.Append("{");
             for (int i = 0; i < props.Length; i++)
             {
                 if (i > 0) sb.Append(", ");
-                sb.AppendFormat("{0}={1} ({2})", props[i].Name, props[i].GetValue(this, null), string.Join(", ", props[i].Attributes));
+                sb.AppendFormat("{0}={1}", props[i].Name, props[i].GetValue(this, null));
             }
             sb.Append("}");
 

@@ -211,7 +211,7 @@ namespace System.Linq.Dynamic
             typeof(Convert),
             typeof(Uri),
 #if !NET35 && !SILVERLIGHT && !NETFX_CORE && !DNXCORE50 && !DOTNET5_4 
-			typeof(System.Data.Objects.EntityFunctions)
+			typeof(Data.Objects.EntityFunctions)
 #endif
         };
 
@@ -282,7 +282,7 @@ namespace System.Linq.Dynamic
                 }
                 else
                 {
-                    AddSymbol("@" + i.ToString(System.Globalization.CultureInfo.InvariantCulture), value);
+                    AddSymbol("@" + i.ToString(Globalization.CultureInfo.InvariantCulture), value);
                 }
             }
         }
@@ -459,12 +459,12 @@ namespace System.Linq.Dynamic
         // &, | bitwise operators
         Expression ParseLogicalAndOr()
         {
-            Expression left = this.ParseComparison();
+            Expression left = ParseComparison();
             while (_token.id == TokenId.Amphersand || _token.id == TokenId.Bar)
             {
                 Token op = _token;
                 NextToken();
-                Expression right = this.ParseComparison();
+                Expression right = ParseComparison();
 
 
                 if (left.Type.IsEnum())
@@ -589,20 +589,20 @@ namespace System.Linq.Dynamic
         // <<, >> operators
         Expression ParseShift()
         {
-            Expression left = this.ParseAdditive();
+            Expression left = ParseAdditive();
             while (_token.id == TokenId.DoubleLessThan || _token.id == TokenId.DoubleGreaterThan)
             {
                 Token op = _token;
-                this.NextToken();
-                Expression right = this.ParseAdditive();
+                NextToken();
+                Expression right = ParseAdditive();
                 switch (op.id)
                 {
                     case TokenId.DoubleLessThan:
-                        this.CheckAndPromoteOperands(typeof(IArithmeticSignatures), op.text, ref left, ref right, op.pos);
+                        CheckAndPromoteOperands(typeof(IArithmeticSignatures), op.text, ref left, ref right, op.pos);
                         left = Expression.LeftShift(left, right);
                         break;
                     case TokenId.DoubleGreaterThan:
-                        this.CheckAndPromoteOperands(typeof(IArithmeticSignatures), op.text, ref left, ref right, op.pos);
+                        CheckAndPromoteOperands(typeof(IArithmeticSignatures), op.text, ref left, ref right, op.pos);
                         left = Expression.RightShift(left, right);
                         break;
                 }
@@ -2270,7 +2270,7 @@ namespace System.Linq.Dynamic
                     }
                     else if (_ch == '<')
                     {
-                        this.NextChar();
+                        NextChar();
                         t = TokenId.DoubleLessThan;
                     }
                     else
@@ -2299,7 +2299,7 @@ namespace System.Linq.Dynamic
                     }
                     else if (_ch == '>')
                     {
-                        this.NextChar();
+                        NextChar();
                         t = TokenId.DoubleGreaterThan;
                     }
                     else
@@ -2432,7 +2432,7 @@ namespace System.Linq.Dynamic
 
         static Exception ParseError(int pos, string format, params object[] args)
         {
-            return new ParseException(string.Format(System.Globalization.CultureInfo.CurrentCulture, format, args), pos);
+            return new ParseException(string.Format(Globalization.CultureInfo.CurrentCulture, format, args), pos);
         }
 
         static Dictionary<string, object> CreateKeywords()
