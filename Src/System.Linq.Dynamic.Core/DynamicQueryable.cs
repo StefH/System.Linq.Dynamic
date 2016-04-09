@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using FluentValidationNA;
 using ReflectionBridge.Extensions;
+using System.Linq.Dynamic.Validation;
 
 namespace System.Linq.Dynamic
 {
@@ -52,8 +52,8 @@ namespace System.Linq.Dynamic
         /// </example>
         public static IQueryable Where(this IQueryable source, string predicate, params object[] args)
         {
-            Validate.Argument(source, "source").IsNotNull().Check()
-                    .Argument(predicate, "predicate").IsNotNull().IsNotEmpty().IsNotWhiteSpace().Check();
+            Check.NotNull(source, nameof(source));
+            Check.NotEmpty(predicate, nameof(predicate));
 
             LambdaExpression lambda = DynamicExpression.ParseLambda(source.ElementType, typeof(bool), predicate, args);
             return source.Provider.CreateQuery(
@@ -82,8 +82,8 @@ namespace System.Linq.Dynamic
         /// </example>
         public static IQueryable Select(this IQueryable source, string selector, params object[] args)
         {
-            Validate.Argument(source, "source").IsNotNull().Check()
-                    .Argument(selector, "selector").IsNotNull().IsNotEmpty().IsNotWhiteSpace().Check();
+            Check.NotNull(source, nameof(source));
+            Check.NotEmpty(selector, nameof(selector));
 
             LambdaExpression lambda = DynamicExpression.ParseLambda(source.ElementType, null, selector, args);
             return source.Provider.CreateQuery(
@@ -109,8 +109,8 @@ namespace System.Linq.Dynamic
         /// </example>
         public static IQueryable<TResult> Select<TResult>(this IQueryable source, string selector, params object[] args)
         {
-            Validate.Argument(source, "source").IsNotNull().Check()
-                    .Argument(selector, "selector").IsNotNull().IsNotEmpty().IsNotWhiteSpace().Check();
+            Check.NotNull(source, nameof(source));
+            Check.NotEmpty(selector, nameof(selector));
 
             LambdaExpression lambda = DynamicExpression.ParseLambda(source.ElementType, typeof(TResult), selector, args);
             return source.Provider.CreateQuery<TResult>(
@@ -136,9 +136,9 @@ namespace System.Linq.Dynamic
         /// </example>
         public static IQueryable Select(this IQueryable source, Type type, string selector, params object[] args)
         {
-            Validate.Argument(source, "source").IsNotNull().Check()
-                    .Argument(selector, "type").IsNotNull().Check()
-                    .Argument(selector, "selector").IsNotNull().IsNotEmpty().IsNotWhiteSpace().Check();
+            Check.NotNull(source, nameof(source));
+            Check.NotNull(type, nameof(type));
+            Check.NotEmpty(selector, nameof(selector));
 
             LambdaExpression lambda = DynamicExpression.ParseLambda(source.ElementType, type, selector, args);
             return source.Provider.CreateQuery(
@@ -158,8 +158,8 @@ namespace System.Linq.Dynamic
         /// <returns>An <see cref="IQueryable"/> whose elements are the result of invoking a one-to-many projection function on each element of the input sequence.</returns>
         public static IQueryable SelectMany(this IQueryable source, string selector, params object[] args)
         {
-            Validate.Argument(source, "source").IsNotNull().Check()
-                    .Argument(selector, "selector").IsNotNull().IsNotEmpty().IsNotWhiteSpace().Check();
+            Check.NotNull(source, nameof(source));
+            Check.NotEmpty(selector, nameof(selector));
 
             LambdaExpression lambda = DynamicExpression.ParseLambda(source.ElementType, null, selector, args);
 
@@ -216,12 +216,10 @@ namespace System.Linq.Dynamic
         /// </example>
         public static IOrderedQueryable OrderBy(this IQueryable source, string ordering, params object[] args)
         {
-            Validate.Argument(source, "source").IsNotNull().Check()
-                    .Argument(ordering, "ordering").IsNotNull().IsNotEmpty().IsNotWhiteSpace().Check();
+            Check.NotNull(source, nameof(source));
+            Check.NotEmpty(ordering, nameof(ordering));
 
-
-            ParameterExpression[] parameters = new ParameterExpression[] {
-                Expression.Parameter(source.ElementType, "") };
+            ParameterExpression[] parameters = { Expression.Parameter(source.ElementType, "") };
             ExpressionParser parser = new ExpressionParser(parameters, ordering, args);
             IEnumerable<DynamicOrdering> orderings = parser.ParseOrdering();
             Expression queryExpr = source.Expression;
@@ -260,9 +258,9 @@ namespace System.Linq.Dynamic
         /// </example>
         public static IQueryable GroupBy(this IQueryable source, string keySelector, string resultSelector, object[] args)
         {
-            Validate.Argument(source, "source").IsNotNull().Check()
-                    .Argument(keySelector, "keySelector").IsNotNull().IsNotEmpty().IsNotWhiteSpace().Check()
-                    .Argument(resultSelector, "resultSelector").IsNotNull().IsNotEmpty().IsNotWhiteSpace().Check();
+            Check.NotNull(source, nameof(source));
+            Check.NotEmpty(keySelector, nameof(keySelector));
+            Check.NotEmpty(resultSelector, nameof(resultSelector));
 
             LambdaExpression keyLambda = DynamicExpression.ParseLambda(source.ElementType, null, keySelector, args);
             LambdaExpression elementLambda = DynamicExpression.ParseLambda(source.ElementType, null, resultSelector, args);
@@ -310,8 +308,8 @@ namespace System.Linq.Dynamic
         /// </example>
         public static IQueryable GroupBy(this IQueryable source, string keySelector, object[] args)
         {
-            Validate.Argument(source, "source").IsNotNull().Check()
-                .Argument(keySelector, "keySelector").IsNotNull().IsNotEmpty().IsNotWhiteSpace().Check();
+            Check.NotNull(source, nameof(source));
+            Check.NotEmpty(keySelector, nameof(keySelector));
 
             LambdaExpression keyLambda = DynamicExpression.ParseLambda(source.ElementType, null, keySelector, args);
 
@@ -355,8 +353,8 @@ namespace System.Linq.Dynamic
         /// <returns>A <see cref="IEnumerable{T}"/> of type <see cref="GroupResult"/> where each element represents a projection over a group, its key, and its subgroups.</returns>
         public static IEnumerable<GroupResult> GroupByMany<TElement>(this IEnumerable<TElement> source, params string[] keySelectors)
         {
-            Validate.Argument(source, "elements").IsNotNull().Check()
-                    .Argument(keySelectors, "keySelectors").IsNotNull().IsNotEmpty().Check();
+            Check.NotNull(source, nameof(source));
+            Check.NotNull(keySelectors, nameof(keySelectors));
 
             var selectors = new List<Func<TElement, object>>(keySelectors.Length);
 
@@ -379,8 +377,8 @@ namespace System.Linq.Dynamic
         /// <returns>A <see cref="IEnumerable{T}"/> of type <see cref="GroupResult"/> where each element represents a projection over a group, its key, and its subgroups.</returns>
         public static IEnumerable<GroupResult> GroupByMany<TElement>(this IEnumerable<TElement> source, params Func<TElement, object>[] keySelectors)
         {
-            Validate.Argument(source, "elements").IsNotNull().Check()
-                    .Argument(keySelectors, "keySelectors").IsNotNull().IsNotEmpty().Check();
+            Check.NotNull(source, nameof(source));
+            Check.NotNull(keySelectors, nameof(keySelectors));
 
             return GroupByManyInternal(source, keySelectors, 0);
         }
@@ -421,11 +419,11 @@ namespace System.Linq.Dynamic
         {
             //http://stackoverflow.com/questions/389094/how-to-create-a-dynamic-linq-join-extension-method
 
-            Validate.Argument(outer, "outer").IsNotNull().Check()
-                    .Argument(inner, "inner").IsNotNull().Check()
-                    .Argument(outerKeySelector, "outerKeySelector").IsNotNull().IsNotEmpty().IsNotWhiteSpace().Check()
-                    .Argument(innerKeySelector, "innerKeySelector").IsNotNull().IsNotEmpty().IsNotWhiteSpace().Check()
-                    .Argument(resultSelector, "resultSelector").IsNotNull().IsNotEmpty().IsNotWhiteSpace().Check();
+            Check.NotNull(outer, nameof(outer));
+            Check.NotNull(inner, nameof(inner));
+            Check.NotEmpty(outerKeySelector, nameof(outerKeySelector));
+            Check.NotEmpty(innerKeySelector, nameof(innerKeySelector));
+            Check.NotEmpty(resultSelector, nameof(resultSelector));
 
             LambdaExpression outerSelectorLambda = DynamicExpression.ParseLambda(outer.ElementType, null, outerKeySelector, args);
             LambdaExpression innerSelectorLambda = DynamicExpression.ParseLambda(inner.AsQueryable().ElementType, null, innerKeySelector, args);

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using FluentValidationNA;
+using System.Linq.Dynamic.Validation;
+using JetBrains.Annotations;
 
 namespace System.Linq.Dynamic.Tests.Helpers
 {
@@ -17,8 +18,8 @@ namespace System.Linq.Dynamic.Tests.Helpers
 
         public static IList<User> GenerateSampleModels(int total, bool allowNullableProfiles = false)
         {
-            Validate.Argument(total).IsInRange(x => total >= 0).Check();
-
+            Check.InRange(total, x => x > 0, nameof(total));
+            
             var list = new List<User>();
 
             for (int i = 0; i < total; i++)
