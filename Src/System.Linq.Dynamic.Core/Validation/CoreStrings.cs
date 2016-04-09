@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 // copied from https://github.com/aspnet/EntityFramework/blob/dev/src/Microsoft.EntityFrameworkCore/Properties/CoreStrings.resx
 namespace System.Linq.Dynamic.Validation
 {
-    public static class CoreStrings
+    internal static class CoreStrings
     {
         /// <summary>
         /// The property '{property}' of the argument '{argument}' cannot be null.

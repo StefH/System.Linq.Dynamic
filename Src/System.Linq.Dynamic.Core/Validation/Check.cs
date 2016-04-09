@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 namespace System.Linq.Dynamic.Validation
 {
     [DebuggerStepThrough]
-    public static class Check
+    internal static class Check
     {
         public static T Condition<T>([NoEnumeration] T value, [NotNull] Predicate<T> condition, [InvokerParameterName] [NotNull] string parameterName)
         {
