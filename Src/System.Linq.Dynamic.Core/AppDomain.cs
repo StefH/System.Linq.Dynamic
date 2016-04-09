@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using Microsoft.Extensions.PlatformAbstractions;
 
-namespace System.Linq.Dynamic
+namespace System.Linq.Dynamic.Core
 {
     /// <summary>
     /// 

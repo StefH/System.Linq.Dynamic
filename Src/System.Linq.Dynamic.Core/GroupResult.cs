@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace System.Linq.Dynamic
+namespace System.Linq.Dynamic.Core
 {
     /// <summary>
     /// The result of a call to a <see cref="DynamicQueryable"/>.GroupByMany() overload.

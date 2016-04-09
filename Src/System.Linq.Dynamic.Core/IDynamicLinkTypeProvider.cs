@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace System.Linq.Dynamic
+namespace System.Linq.Dynamic.Core
 {
     /// <summary>
     /// Interface for providing custom types for Dynamic Linq.

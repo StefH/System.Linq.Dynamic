@@ -1,4 +1,4 @@
-﻿namespace System.Linq.Dynamic
+﻿namespace System.Linq.Dynamic.Core
 {
     /// <summary>
     /// Static configuration class for Dynamic Linq.

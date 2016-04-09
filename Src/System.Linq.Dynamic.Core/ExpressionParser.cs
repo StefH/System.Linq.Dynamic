@@ -6,7 +6,7 @@ using System.Collections;
 using System.Globalization;
 using ReflectionBridge.Extensions;
 
-namespace System.Linq.Dynamic
+namespace System.Linq.Dynamic.Core
 {
     internal class ExpressionParser
     {

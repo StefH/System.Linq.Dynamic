@@ -1,11 +1,11 @@
 ﻿#if !DNXCORE50
 using System.Collections;
-using System.Linq.Dynamic.Tests.Helpers.Entities;
+using System.Linq.Dynamic.Core.Tests.Helpers.Entities;
 using Microsoft.Data.Entity;
 using TestToolsToXunitProxy;
 using Assert = Xunit.Assert;
 
-namespace System.Linq.Dynamic.Tests
+namespace System.Linq.Dynamic.Core.Tests
 {
     /// <summary>
     /// Summary description for EntitiesTests

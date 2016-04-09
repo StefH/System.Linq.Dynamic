@@ -1,13 +1,13 @@
 {
-    "version": "2.0.0-beta001",
+    "version": "1.0.0-beta-00001",
     "title": "",
     "description": "This is a port of the the Microsoft assembly for the .Net 4.0 Dynamic language functionality.",
     "summary": "This is a port of the the Microsoft assembly for the .Net 4.0 Dynamic language functionality.",
     "tags": [ "linq", "dynamic" ],
     "authors": [ "Stef Heyenrath" ],
     "owners": [ "Stef Heyenrath" ],
-    "projectUrl": "https://github.com/StefH/System.Linq.Dynamic",
-    "licenseUrl": "https://github.com/StefH/System.Linq.Dynamic/blob/master/licence.txt",
+    "projectUrl": "https://github.com/StefH/System.Linq.Dynamic.Core",
+    "licenseUrl": "https://github.com/StefH/System.Linq.Dynamic.Core/blob/master/licence.txt",
     "releaseNotes": "initial support for dnx452 and dnxcore5",
 
     "dependencies": {
@@ -19,9 +19,43 @@
     },
 
     "frameworks": {
+        "net35": {
+            "frameworkAssemblies": {
+            }
+        },
+        "net40": {
+            "frameworkAssemblies": {
+                "System.Data.Entity": ""
+            }
+        },
+        "net45": {
+            "frameworkAssemblies": {
+                "System.Data.Entity": ""
+            }
+        },
+        "net451": {
+            "frameworkAssemblies": {
+                "System.Data.Entity": ""
+            }
+        },
+        "net452": {
+            "frameworkAssemblies": {
+                "System.Data.Entity": ""
+            }
+        },
+        "net461": {
+            "frameworkAssemblies": {
+                "System.Data.Entity": ""
+            }
+        },
+        "dnx451": {
+            "frameworkAssemblies": {
+                "System.Data.Entity": ""
+            }
+        },
         "dnx452": {
             "frameworkAssemblies": {
-                "System.Data.Entity": "4.0.0.0"
+                "System.Data.Entity": ""
             }
         },
         "dnxcore5": {
@@ -29,7 +63,7 @@
                 "Microsoft.CSharp": "4.0.1-beta-*",
 
                 "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
-                
+
                 "System.Runtime": "4.0.21-beta-*",
                 "System.Runtime.Extensions": "4.0.11-beta-*",
                 "System.Runtime.InteropServices": "4.0.21-beta-*",

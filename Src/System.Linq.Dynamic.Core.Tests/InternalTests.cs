@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 #endif
 
-namespace System.Linq.Dynamic.Tests
+namespace System.Linq.Dynamic.Core.Tests
 {
     [TestClass]
     public class InternalTests

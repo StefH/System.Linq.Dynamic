@@ -1,5 +1,5 @@
 ﻿
-namespace System.Linq.Dynamic.Tests.Helpers
+namespace System.Linq.Dynamic.Core.Tests.Helpers
 {
     [DynamicLinqType]
     public enum TestEnum

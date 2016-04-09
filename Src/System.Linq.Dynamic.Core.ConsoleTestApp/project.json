@@ -3,12 +3,12 @@
     "authors": [ "Stef Heyenrath" ],
     "dependencies": {
         "FluentValidation.dnx": "2.0.0-*",
-        "System.Linq.Dynamic.Core": "2.0.0-*"
+        "System.Linq.Dynamic.Core": "1.0.0-*"
     },
 
     "compile": [
-        "../System.Linq.Dynamic.Tests/Helpers/SampleModels.cs",
-        "../System.Linq.Dynamic.Tests/Helpers/Entities/Sample*.cs"
+        "../System.Linq.Dynamic.Core.Tests/Helpers/SampleModels.cs",
+        "../System.Linq.Dynamic.Core.Tests/Helpers/Entities/Sample*.cs"
     ],
 
     "compilationOptions": {

@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 
 // copied from https://github.com/aspnet/EntityFramework/blob/dev/src/Microsoft.EntityFrameworkCore/Properties/CoreStrings.resx
-namespace System.Linq.Dynamic.Validation
+namespace System.Linq.Dynamic.Core.Validation
 {
     internal static class CoreStrings
     {

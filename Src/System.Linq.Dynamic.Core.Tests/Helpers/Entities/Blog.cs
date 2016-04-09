@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace System.Linq.Dynamic.Tests.Helpers.Entities
+namespace System.Linq.Dynamic.Core.Tests.Helpers.Entities
 {
     public class Blog
     {

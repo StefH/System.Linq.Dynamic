@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Threading;
 
-namespace System.Linq.Dynamic
+namespace System.Linq.Dynamic.Core
 {
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Justification = "There is only ever one instance of this class, and it should never be destroyed except on AppDomain termination.")]
     internal class ClassFactory
@@ -22,14 +22,14 @@ namespace System.Linq.Dynamic
 
         private ClassFactory()
         {
-            AssemblyName name = new AssemblyName("System.Linq.Dynamic.DynamicClasses, Version=1.0.0.0");
-            AssemblyBuilder assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(name, AssemblyBuilderAccess.RunAndCollect);
+            AssemblyName name = new AssemblyName("System.Linq.Dynamic.Core.DynamicClasses, Version=1.0.0.0");
+            AssemblyBuilder assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(name, AssemblyBuilderAccess.Run);
 #if ENABLE_LINQ_PARTIAL_TRUST
             new ReflectionPermission(PermissionState.Unrestricted).Assert();
 #endif
             try
             {
-                _module = assembly.DefineDynamicModule("System.Linq.Dynamic.DynamicClasses");
+                _module = assembly.DefineDynamicModule("System.Linq.Dynamic.Core.DynamicClasses");
             }
             finally
             {

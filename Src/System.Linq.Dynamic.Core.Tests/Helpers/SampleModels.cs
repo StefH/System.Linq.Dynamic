@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq.Dynamic.Validation;
+using System.Linq.Dynamic.Core.Validation;
 using JetBrains.Annotations;
 
-namespace System.Linq.Dynamic.Tests.Helpers
+namespace System.Linq.Dynamic.Core.Tests.Helpers
 {
     public class User
     {

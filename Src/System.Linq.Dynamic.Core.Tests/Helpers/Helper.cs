@@ -6,7 +6,7 @@ using ReflectionBridge;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 #endif
 
-namespace System.Linq.Dynamic.Tests.Helpers
+namespace System.Linq.Dynamic.Core.Tests.Helpers
 {
     static class Helper
     {

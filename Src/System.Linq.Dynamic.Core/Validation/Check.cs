@@ -7,7 +7,7 @@ using System.Reflection;
 using JetBrains.Annotations;
 
 // Copied from https://github.com/aspnet/EntityFramework/blob/dev/src/Shared/Check.cs
-namespace System.Linq.Dynamic.Validation
+namespace System.Linq.Dynamic.Core.Validation
 {
     [DebuggerStepThrough]
     internal static class Check
@@ -58,7 +58,7 @@ namespace System.Linq.Dynamic.Validation
         }
 
         [ContractAnnotation("value:null => halt")]
-        public static IReadOnlyList<T> NotEmpty<T>(IReadOnlyList<T> value, [InvokerParameterName] [NotNull] string parameterName)
+        public static IList<T> NotEmpty<T>(IList<T> value, [InvokerParameterName] [NotNull] string parameterName)
         {
             NotNull(value, parameterName);
 
@@ -108,7 +108,7 @@ namespace System.Linq.Dynamic.Validation
             return value;
         }
 
-        public static IReadOnlyList<T> HasNoNulls<T>(IReadOnlyList<T> value, [InvokerParameterName] [NotNull] string parameterName)
+        public static IList<T> HasNoNulls<T>(IList<T> value, [InvokerParameterName] [NotNull] string parameterName)
             where T : class
         {
             NotNull(value, parameterName);
@@ -125,7 +125,11 @@ namespace System.Linq.Dynamic.Validation
 
         public static Type ValidEntityType(Type value, [InvokerParameterName] [NotNull] string parameterName)
         {
+#if DNXCORE50
             if (!value.GetTypeInfo().IsClass)
+#else
+            if (!value.IsClass)
+#endif
             {
                 NotEmpty(parameterName, nameof(parameterName));
 

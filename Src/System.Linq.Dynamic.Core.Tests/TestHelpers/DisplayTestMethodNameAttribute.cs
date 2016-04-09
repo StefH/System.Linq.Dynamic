@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Xunit.Sdk;
 
-namespace System.Linq.Dynamic.Tests
+namespace System.Linq.Dynamic.Core.Tests.TestHelpers
 {
     class DisplayTestMethodNameAttribute : BeforeAfterTestAttribute
     {

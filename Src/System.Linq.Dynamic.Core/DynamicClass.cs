@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Text;
 
-namespace System.Linq.Dynamic
+namespace System.Linq.Dynamic.Core
 {
     /// <summary>
     /// Provides a base class for dynamic objects created by using the <see cref="DynamicQueryable.Select(IQueryable,string,object[])"/> 

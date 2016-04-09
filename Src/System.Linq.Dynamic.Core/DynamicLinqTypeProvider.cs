@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace System.Linq.Dynamic
+namespace System.Linq.Dynamic.Core
 {
     /// <summary>
     /// Indicates to Dynamic Linq to consider the Type as a valid dynamic linq type. Use only when

@@ -1,4 +1,4 @@
-﻿namespace System.Linq.Dynamic
+﻿namespace System.Linq.Dynamic.Core
 {
     static class Res
     {

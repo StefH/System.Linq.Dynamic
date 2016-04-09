@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Linq.Dynamic.Tests.Helpers;
+using System.Linq.Dynamic.Core.Tests.Helpers;
 #if DNXCORE50 || DNX451 || DNX452
 using TestToolsToXunitProxy;
 #else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 #endif
 
-namespace System.Linq.Dynamic.Tests
+namespace System.Linq.Dynamic.Core.Tests
 {
     [TestClass]
     public class BasicTests

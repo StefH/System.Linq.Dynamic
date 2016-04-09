@@ -5,7 +5,7 @@
 //using System.Reflection;
 //using System.Reflection.Emit;
 
-//namespace System.Linq.Dynamic
+//namespace System.Linq.Dynamic.Core
 //{
 //    public class TestClass
 //    {

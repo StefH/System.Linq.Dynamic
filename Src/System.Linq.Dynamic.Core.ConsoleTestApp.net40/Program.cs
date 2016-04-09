@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Dynamic.Core.Tests.Helpers;
 using System.Reflection;
 
-namespace System.Linq.Dynamic.Core.ConsoleTestApp
+namespace System.Linq.Dynamic.Core.ConsoleTestApp.net40
 {
     public class Program
     {
@@ -18,7 +18,7 @@ namespace System.Linq.Dynamic.Core.ConsoleTestApp
             Var6 = 16,
         }
 
-        public void Main(string[] args)
+        public static void Main(string[] args)
         {
             Console.WriteLine("--start");
 
@@ -27,7 +27,7 @@ namespace System.Linq.Dynamic.Core.ConsoleTestApp
             ExpressionTests_Enum();
             Where();
             ExpressionTests_Sum();
-            
+
             Console.WriteLine("--end");
         }
 
@@ -57,10 +57,10 @@ namespace System.Linq.Dynamic.Core.ConsoleTestApp
             //Assert
             int idx = 0;
             var ar1 = result1.ToArray();
-            foreach (var c in new[] {TestEnum.Var1, TestEnum.Var2, TestEnum.Var3})
+            foreach (var c in new[] { TestEnum.Var1, TestEnum.Var2, TestEnum.Var3 })
             {
                 Console.Write("*");
-                Write((int) c, (int) ar1[idx]);
+                Write((int)c, (int)ar1[idx]);
                 idx++;
             }
 
@@ -72,10 +72,10 @@ namespace System.Linq.Dynamic.Core.ConsoleTestApp
                 Write((int)c, (int)ar1[idx]);
                 idx++;
             }
-            
-            Write((int) TestEnum.Var5, (int) result3.Single());
-            Write((int) TestEnum.Var5, (int) result4.Single());
-            Write((int) TestEnum.Var5, (int) result5.Single());
+
+            Write((int)TestEnum.Var5, (int)result3.Single());
+            Write((int)TestEnum.Var5, (int)result4.Single());
+            Write((int)TestEnum.Var5, (int)result5.Single());
         }
 
         public static void Where()

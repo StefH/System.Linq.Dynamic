@@ -43,6 +43,6 @@ var test = _context.Blogs.Select(""DbFunctions.Reverse(Name)"").ToDynamicArray()
 var expected = _context.Blogs.Select(x => DbFunctions.Reverse(x.Name)).ToArray();
 
 //Confirm the result:
-CollectionAssert.AreEqual(expected, test);")
+CollectionAssert.Equal(expected, test);")
 
 @Html.FormatMarkdown("Note that if the custom type provider isn't set up correctly, you will get a [`ParseException`][0].\n[0]: /Library/ParseException")

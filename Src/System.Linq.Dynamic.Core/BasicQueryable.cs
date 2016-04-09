@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Dynamic.Validation;
+using System.Linq.Dynamic.Core.Validation;
 using System.Linq.Expressions;
 
-namespace System.Linq.Dynamic
+namespace System.Linq.Dynamic.Core
 {
     /// <summary>
     /// Provides a set of static (Shared in Visual Basic) methods for querying data 

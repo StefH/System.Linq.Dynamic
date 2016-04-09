@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 
-namespace System.Linq.Dynamic.Tests.Helpers.Entities
+namespace System.Linq.Dynamic.Core.Tests.Helpers.Entities
 {
     public class BlogContext : DbContext
     {

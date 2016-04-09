@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Runtime.Serialization;
 
-namespace System.Linq.Dynamic
+namespace System.Linq.Dynamic.Core
 {
     /// <summary>
     /// Represents errors that occur while parsing dynamic linq string expressions.
